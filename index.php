@@ -11,603 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <style>
-    .btn-more-doctors {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #0266D1, #1a7eff);
-      color: white;
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(2, 102, 209, 0.3);
-      position: relative;
-      overflow: hidden;
-      border: none;
-      font-size: 1.1rem;
-    }
-    
-    .btn-more-doctors:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #1a7eff, #0266D1);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 1;
-    }
-    
-    .btn-more-doctors:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(2, 102, 209, 0.4);
-    }
-    
-    .btn-more-doctors:hover:before {
-      opacity: 1;
-    }
-    
-    .btn-more-doctors span {
-      position: relative;
-      z-index: 2;
-    }
-    
-    .btn-icon {
-      margin-right: 10px;
-      background: rgba(255, 255, 255, 0.2);
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      position: relative;
-      z-index: 2;
-    }
-    
-    .btn-more-doctors:hover .btn-icon {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateX(3px);
-    }
-
-    :root {
-      --primary-color: #0266D1;
-      --secondary-color: #1a7eff;
-      --accent-color: #4eafff;
-      --light-bg: #f5f9ff;
-      --text-dark: #2d3748;
-      --text-light: #718096;
-      --border-radius: 12px;
-      --box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-      --transition: all 0.3s ease;
-    }
-
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background: var(--light-bg);
-      color: var(--text-dark);
-      line-height: 1.6;
-    }
-
-    /* تحسينات الشريط العلوي */
-    .navbar {
-      background-color: #ffffff;
-      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-      padding: 12px 0;
-    }
-
-    .navbar-brand {
-      display: flex;
-      align-items: center;
-      font-weight: 700;
-      font-size: 1.6rem;
-      color: var(--primary-color) !important;
-    }
-
-    .logo-img {
-      width: 150px;
-      height: 70px;
-      object-fit: contain;
-      margin-left: 10px;
-    }
-
-    .nav-link {
-      color: var(--text-dark) !important;
-      font-weight: 500;
-      margin: 0 6px;
-      transition: var(--transition);
-      position: relative;
-      font-size: 0.95rem;
-    }
-
-    .nav-link:hover {
-      color: var(--primary-color) !important;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: 0;
-      right: 0;
-      background-color: var(--primary-color);
-      transition: width 0.3s;
-    }
-
-    .nav-link:hover::after {
-      width: 100%;
-    }
-
-    /* قسم البطل */
-    .hero {
-      background: linear-gradient(to right, #101E66FF, #0449AAFF);
-      color: #ffffff;
-      text-align: center;
-      padding: 80px 20px;
-      border-radius: 0 0 30px 30px;
-      margin-bottom: 50px;
-    }
-
-    .hero h1 {
-      font-size: 2.4rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      line-height: 1.3;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      margin-bottom: 30px;
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    /* الأزرار */
-    .btn-primary {
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-      border: none;
-      padding: 12px 28px;
-      border-radius: 50px;
-      font-weight: 600;
-      transition: var(--transition);
-      font-size: 1rem;
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(2, 102, 209, 0.2);
-    }
-
-    .login-btn {
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-      color: white !important;
-      padding: 8px 18px;
-      border-radius: 50px;
-      font-weight: 600;
-      transition: var(--transition);
-      font-size: 0.9rem;
-      text-decoration: none;
-      padding: 10px;
-    }
-
-    .login-btn:hover {
-      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(2, 102, 209, 0.2);
-      color: white !important;
-    }
-
-    /* العناوين */
-    .section-title {
-      text-align: center;
-      margin-bottom: 40px;
-      color: var(--primary-color);
-      position: relative;
-      padding-bottom: 15px;
-      font-size: 2rem;
-      font-weight: 700;
-    }
-
-    .section-title::after {
-      content: '';
-      position: absolute;
-      width: 70px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-      bottom: 0;
-      right: 50%;
-      transform: translateX(50%);
-    }
-
-    /* البطاقات */
-    .service-card,
-    .team-card {
-      border-radius: var(--border-radius);
-      padding: 25px 20px;
-      background: #ffffff;
-      box-shadow: var(--box-shadow);
-      transition: var(--transition);
-      height: 100%;
-      text-align: center;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .service-card:hover,
-    .team-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .service-icon {
-      font-size: 2.2rem;
-      color: var(--primary-color);
-      margin-bottom: 18px;
-    }
-
-    .team-img {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin: 0 auto 18px;
-      border: 4px solid var(--light-bg);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .team-card h5 {
-      font-weight: 700;
-      color: var(--primary-color);
-      margin-bottom: 5px;
-      font-size: 1.1rem;
-    }
-
-    .team-card p {
-      color: var(--text-light);
-      font-size: 0.9rem;
-    }
-
-    /* منتقي اللغة */
-    .language-selector {
-      position: relative;
-      display: inline-block;
-    }
-
-    .language-btn {
-      background: transparent;
-      border: 2px solid var(--primary-color);
-      color: var(--primary-color);
-      border-radius: 50px;
-      padding: 7px 14px;
-      display: flex;
-      align-items: center;
-      font-weight: 600;
-      transition: var(--transition);
-      font-size: 0.9rem;
-    }
-
-    .language-btn:hover {
-      background: var(--primary-color);
-      color: white;
-    }
-
-    .language-dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      padding: 8px;
-      min-width: 130px;
-      z-index: 1000;
-      display: none;
-      margin-top: 5px;
-    }
-
-    .language-dropdown.show {
-      display: block;
-    }
-
-    .language-option {
-      display: flex;
-      align-items: center;
-      padding: 8px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 0.9rem;
-    }
-
-    .language-option:hover {
-      background: var(--light-bg);
-    }
-
-    .language-flag {
-      width: 20px;
-      height: 15px;
-      margin-left: 8px;
-      border-radius: 2px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-    }
-
-    /* النماذج */
-    .modal-content {
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    }
-
-    .auth-tabs {
-      display: flex;
-      border-bottom: 1px solid #eee;
-    }
-
-    .auth-tab {
-      flex: 1;
-      text-align: center;
-      padding: 14px;
-      cursor: pointer;
-      transition: var(--transition);
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .auth-tab.active {
-      color: var(--primary-color);
-      border-bottom: 3px solid var(--primary-color);
-    }
-
-    .auth-form {
-      padding: 22px;
-    }
-
-    .form-control {
-      padding: 12px 14px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #e2e8f0;
-      transition: var(--transition);
-      font-size: 0.9rem;
-    }
-
-    .form-control:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(2, 102, 209, 0.1);
-    }
-
-    .form-check-input:checked {
-      background-color: var(--primary-color);
-      border-color: var(--primary-color);
-    }
-
-    /* منتقي الدولة للهاتف */
-    .phone-input-group {
-      display: flex;
-      align-items: stretch;
-    }
-
-    .country-select {
-      display: flex;
-      align-items: center;
-      padding: 5px 12px;
-      background: #f8f9fa;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px 0 0 10px;
-      cursor: pointer;
-      user-select: none;
-      min-width: 100px;
-    }
-
-    .country-select .flag-icon {
-      width: 20px;
-      height: 15px;
-      margin-left: 6px;
-    }
-
-    .country-code {
-      font-weight: bold;
-      font-size: 0.9rem;
-    }
-
-    .phone-number-input {
-      border-radius: 0 10px 10px 0;
-      flex: 1;
-      font-size: 0.9rem;
-    }
-
-    .country-dropdown {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      max-height: 200px;
-      overflow-y: auto;
-      width: 200px;
-      display: none;
-      z-index: 1000;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .country-dropdown.show {
-      display: block;
-    }
-
-    .country-option {
-      padding: 8px 12px;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      transition: background 0.2s;
-      font-size: 0.9rem;
-    }
-
-    .country-option:hover {
-      background: #f8f9fa;
-    }
-
-    .country-option .flag-icon {
-      margin-left: 8px;
-      width: 20px;
-      height: 15px;
-    }
-
-    .form-note {
-      font-size: 0.75rem;
-      color: var(--text-light);
-      margin-top: 5px;
-    }
-
-    .forgot-password {
-      color: var(--primary-color);
-      text-decoration: none;
-      font-size: 0.85rem;
-    }
-
-    .forgot-password:hover {
-      text-decoration: underline;
-    }
-
-    /* الفوتر */
-    footer {
-      background: linear-gradient(to right, #101944FF, #0449AAFF);
-      color: #ffffff;
-      padding: 50px 0 25px;
-      margin-top: 70px;
-    }
-
-    footer h5 {
-      font-weight: 700;
-      margin-bottom: 18px;
-      position: relative;
-      padding-bottom: 10px;
-      font-size: 1.2rem;
-    }
-
-    footer h5::after {
-      content: '';
-      position: absolute;
-      width: 35px;
-      height: 2px;
-      background-color: #fff;
-      bottom: 0;
-      right: 0;
-    }
-
-    footer a {
-      color: #e0e0e0;
-      text-decoration: none;
-      transition: var(--transition);
-      font-size: 0.9rem;
-    }
-
-    footer a:hover {
-      color: #ffffff;
-      text-decoration: underline;
-    }
-
-    .social-icons a {
-      display: inline-block;
-      width: 38px;
-      height: 38px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      text-align: center;
-      line-height: 38px;
-      margin-left: 8px;
-      transition: var(--transition);
-    }
-
-    .social-icons a:hover {
-      background: var(--primary-color);
-      transform: translateY(-3px);
-    }
-
-    /* تحسينات للشاشات الصغيرة */
-    @media (max-width: 768px) {
-      .hero {
-        padding: 60px 15px;
-        border-radius: 0 0 20px 20px;
-      }
-
-      .hero h1 {
-        font-size: 1.8rem;
-      }
-
-      .hero p {
-        font-size: 0.95rem;
-      }
-
-      .section-title {
-        font-size: 1.6rem;
-        margin-bottom: 30px;
-      }
-
-      .team-img {
-        width: 110px;
-        height: 110px;
-      }
-
-      .language-dropdown {
-        right: 0;
-        left: auto;
-      }
-
-      .auth-form {
-        padding: 18px;
-      }
-
-      .modal-content {
-        margin: 20px;
-      }
-
-      .navbar-brand {
-        font-size: 1.4rem;
-      }
-
-      .logo-img {
-        width: 120px;
-        height: 60px;
-      }
-    }
-
-    /* تحسينات إضافية */
-    .text-muted {
-      font-size: 0.85rem;
-    }
-
-    .card {
-      border-radius: var(--border-radius);
-      border: none;
-      box-shadow: var(--box-shadow);
-    }
-
-    .form-label {
-      font-weight: 500;
-      margin-bottom: 8px;
-      font-size: 0.9rem;
-    }
-
-    .form-select {
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-    }
-  </style>
+<link rel="stylesheet" href="css/index_style.css">
 </head>
 
 <body>
@@ -615,7 +19,7 @@
   <!-- شريط التنقل -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="index.html">
         <img src="assets/images/life.png" alt="Life Path Logo" class="logo-img">
         <span class="ms-2 fw-bold">Life Path</span>
       </a>
@@ -657,6 +61,16 @@
     </div>
   </nav>
 
+  <!-- Breadcrumb -->
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item active" aria-current="page">خدماتنا</li>
+      </ol>
+    </nav>
+  </div>
+
   <!-- قسم البطل -->
   <section id="home" class="hero">
     <div class="container">
@@ -675,30 +89,38 @@
       <div class="row g-4">
         <div class="col-md-6 col-lg-3">
           <div class="service-card">
-            <div class="service-icon"><i class="bi bi-chat-dots"></i></div>
+            <div class="service-icon"><i class="bi bi-chat-dots-fill"></i></div>
             <h4>استشارات نفسية</h4>
             <p>جلسات استشارية مع أخصائيين نفسيين معتمدين لتقديم الدعم والمساندة في مختلف القضايا النفسية.</p>
+            <a href="psychological_consultations.html" class="service-btn">اكتشف المزيد <i class="bi bi-arrow-left"></i></a>
+            <a href="psychological_consultations.html" class="service-link"></a>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
           <div class="service-card">
-            <div class="service-icon"><i class="bi bi-people"></i></div>
+            <div class="service-icon"><i class="bi bi-people-fill"></i></div>
             <h4>جلسات علاج فردي</h4>
             <p>جلسات علاجية مخصصة تناسب احتياجاتك الفردية بهدف تحقيق النمو الشخصي والتغلب على التحديات.</p>
+            <a href="individual_therapy.html" class="service-btn">اكتشف المزيد <i class="bi bi-arrow-left"></i></a>
+            <a href="individual_therapy.html" class="service-link"></a>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
           <div class="service-card">
-            <div class="service-icon"><i class="bi bi-emoji-smile"></i></div>
+            <div class="service-icon"><i class="bi bi-emoji-smile-fill"></i></div>
             <h4>علاج الأطفال والمراهقين</h4>
             <p>برامج علاجية متخصصة مصممة خصيصًا لفئة الأطفال والمراهقين لمساعدتهم على تجاوز الصعوبات.</p>
+            <a href="children_teen_therapy.html" class="service-btn">اكتشف المزيد <i class="bi bi-arrow-left"></i></a>
+            <a href="children_teen_therapy.html" class="service-link"></a>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
           <div class="service-card">
-            <div class="service-icon"><i class="bi bi-clipboard-data"></i></div>
+            <div class="service-icon"><i class="bi bi-clipboard-data-fill"></i></div>
             <h4>التقييم النفسي الشامل</h4>
             <p>إجراء تقييمات نفسية شاملة باستخدام أدوات قياسية معتمدة لتشخيص الحالة ووضع خطة علاج مناسبة.</p>
+            <a href="psychological_assessment.html" class="service-btn">اكتشف المزيد <i class="bi bi-arrow-left"></i></a>
+            <a href="psychological_assessment.html" class="service-link"></a>
           </div>
         </div>
       </div>
@@ -748,8 +170,6 @@
       </a>
     </div>
   </div>
-
-
 </section>
 
 
@@ -1082,119 +502,8 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // التبديل بين تسجيل الدخول والتسجيل
-    function switchToRegister() {
-      document.getElementById('login-tab').classList.remove('active');
-      document.getElementById('register-tab').classList.add('active');
-      document.getElementById('loginForm').style.display = 'none';
-      document.getElementById('registerForm').style.display = 'block';
-    }
+  <script src="js/index.js"></script>
 
-    function switchToLogin() {
-      document.getElementById('register-tab').classList.remove('active');
-      document.getElementById('login-tab').classList.add('active');
-      document.getElementById('registerForm').style.display = 'none';
-      document.getElementById('loginForm').style.display = 'block';
-    }
-
-    document.getElementById('login-tab').addEventListener('click', switchToLogin);
-    document.getElementById('register-tab').addEventListener('click', switchToRegister);
-
-    // إرسال النماذج
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      alert('تم تسجيل الدخول بنجاح! سيتم توجيهك إلى صفحة الحجز.');
-      setTimeout(function () {
-        window.location.href = 'booking.html';
-      }, 1000);
-    });
-
-    document.getElementById('registerForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      alert('تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.');
-      switchToLogin();
-    });
-
-    // منتقي اللغة المخصص
-    document.getElementById('languageButton').addEventListener('click', function () {
-      document.getElementById('languageDropdown').classList.toggle('show');
-    });
-
-    document.querySelectorAll('.language-option').forEach(option => {
-      option.addEventListener('click', function () {
-        const lang = this.getAttribute('data-lang');
-        setLanguage(lang);
-      });
-    });
-
-    function setLanguage(lang) {
-      const langText = document.getElementById('currentLanguage');
-      const langBtn = document.querySelector('.language-btn');
-
-      if (lang === 'ar') {
-        langText.textContent = 'العربية';
-        langBtn.innerHTML = '<i class="bi bi-translate me-1"></i> العربية';
-        document.documentElement.dir = 'rtl';
-        document.documentElement.lang = 'ar';
-        alert('تم تغيير اللغة إلى العربية');
-      } else if (lang === 'en') {
-        langText.textContent = 'English';
-        langBtn.innerHTML = '<i class="bi bi-translate me-1"></i> English';
-        document.documentElement.dir = 'ltr';
-        document.documentElement.lang = 'en';
-        alert('Language changed to English');
-      }
-
-      // إغلاق القائمة المنسدلة
-      document.getElementById('languageDropdown').classList.remove('show');
-    }
-
-    // إغلاق منتقي اللغة عند النقر خارجها
-    window.addEventListener('click', function (e) {
-      const dropdown = document.getElementById('languageDropdown');
-      const selector = document.querySelector('.language-selector');
-
-      if (!selector.contains(e.target) && dropdown.classList.contains('show')) {
-        dropdown.classList.remove('show');
-      }
-    });
-
-    // منتقي الدولة للهاتف
-    const countrySelect = document.getElementById('countrySelect');
-    const countryDropdown = document.getElementById('countryDropdown');
-    const countryCodeSpan = document.getElementById('countryCode');
-    const countryFlagSpan = countrySelect.querySelector('.flag-icon');
-
-    // فتح وإغلاق القائمة
-    countrySelect.addEventListener('click', (e) => {
-      e.stopPropagation();
-      countryDropdown.classList.toggle('show');
-    });
-
-    // اختيار الدولة من القائمة
-    document.querySelectorAll('.country-option').forEach(option => {
-      option.addEventListener('click', () => {
-        const code = option.getAttribute('data-code');
-        const flag = option.getAttribute('data-flag');
-        const flagClass = `flag-icon-${flag}`;
-
-        countryCodeSpan.textContent = code;
-        countryFlagSpan.className = `flag-icon ${flagClass}`;
-        countryDropdown.classList.remove('show');
-      });
-    });
-
-    // إغلاق القائمة عند النقر خارجها
-    document.addEventListener('click', function (event) {
-      if (!countrySelect.contains(event.target) && !countryDropdown.contains(event.target)) {
-        countryDropdown.classList.remove('show');
-      }
-    });
-
-    // تعيين تاريخ أقصى لتاريخ الميلاد
-    document.getElementById('dob').max = new Date().toISOString().split("T")[0];
-  </script>
 </body>
 
 </html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Life Path</a>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h2 class="mb-4">Payment</h2>
+        <div class="row g-4">
+
+            <!-- Appointment Summary -->
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm">
+                    <h5>Appointment Summary</h5>
+                    <p><strong>Name:</strong> John Doe</p>
+                    <p><strong>Doctor:</strong> Dr. Sarah Johnson</p>
+                    <p><strong>Session Type:</strong> In-Clinic</p>
+                    <p><strong>Date & Time:</strong> 2025-09-15 10:00 AM</p>
+                    <p><strong>Price:</strong> $100</p>
+                </div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm">
+                    <h5>Select Payment Method</h5>
+
+                    <!-- Payment Options -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="card text-center p-3 w-25 payment-option">
+                            <i class="fa-solid fa-credit-card fa-2x mb-2"></i>
+                            <p>Card</p>
+                        </div>
+                        <div class="card text-center p-3 w-25 payment-option">
+                            <i class="fa-brands fa-paypal fa-2x mb-2"></i>
+                            <p>PayPal</p>
+                        </div>
+                        <div class="card text-center p-3 w-25 payment-option">
+                            <i class="fa-solid fa-money-bill-wave fa-2x mb-2"></i>
+                            <p>Cash</p>
+                        </div>
+                    </div>
+
+                    <!-- Card Details Form -->
+                    <div id="cardDetails">
+                        <div class="mb-3">
+                            <label class="form-label">Card Number</label>
+                            <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col">
+                                <label class="form-label">Expiry</label>
+                                <input type="text" class="form-control" placeholder="MM/YY">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">CVV</label>
+                                <input type="text" class="form-control" placeholder="123">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Card Holder</label>
+                            <input type="text" class="form-control" placeholder="John Doe">
+                        </div>
+                    </div>
+
+                    <!-- Confirm -->
+                    <div class="form-check mt-3">
+                        <input type="checkbox" class="form-check-input" id="termsCheck">
+                        <label class="form-check-label" for="termsCheck">I agree to terms and conditions</label>
+                    </div>
+                    <button class="btn btn-success mt-3 w-100" id="confirmPaymentBtn">Confirm Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

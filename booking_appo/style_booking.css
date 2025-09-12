@@ -1,0 +1,322 @@
+        :root {
+            --primary-color: #2c6eb5;
+            --secondary-color: #50b7b3;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+        
+        body {
+            background-color: #f5f7f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .booking-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+        
+        .booking-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .booking-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .booking-progress::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: #e9ecef;
+            z-index: 1;
+        }
+        
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .progress-step .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            color: #6c757d;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .progress-step.active .step-number {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .progress-step.completed .step-number {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .step-title {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .progress-step.active .step-title,
+        .progress-step.completed .step-title {
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        .booking-step {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .booking-step.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+        
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-custom:hover {
+            background-color: #235a9e;
+            color: white;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .time-slot {
+            padding: 10px;
+            text-align: center;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .time-slot:hover {
+            background-color: #e9ecef;
+        }
+        
+        .time-slot.selected {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .time-slot.unavailable {
+            background-color: #f8d7da;
+            color: #721c24;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .appointment-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .appointment-detail {
+            display: flex;
+            margin-bottom: 12px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: #495057;
+        }
+        
+        .calendar-container {
+            margin-bottom: 25px;
+        }
+        
+        .calendar-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-day {
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .calendar-day:hover:not(.disabled):not(.selected) {
+            background-color: #e9ecef;
+        }
+        
+        .calendar-day.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .calendar-day.disabled {
+            color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        
+        .calendar-day.today {
+            background-color: #e3f2fd;
+            font-weight: 600;
+        }
+        
+        .doctor-card {
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .doctor-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(44, 110, 181, 0.2);
+        }
+        
+        .doctor-card.selected {
+            border-color: var(--primary-color);
+            background-color: #e3f2fd;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-confirmed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-completed {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .bookings-table th,
+        .bookings-table td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .bookings-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .bookings-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .time-slots {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+            }
+            
+            .booking-progress {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .progress-step {
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+            }
+            
+            .progress-step .step-number {
+                margin: 0 15px 0 0;
+            }
+            
+            .booking-progress::before {
+                display: none;
+            }
+        }
