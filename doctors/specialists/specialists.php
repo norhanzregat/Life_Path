@@ -198,6 +198,7 @@
     
     .whatsapp-float:hover {
       transform: scale(1.1);
+        color: white !important;
     }
     
     /* Modal Styles - Redesigned */
@@ -868,10 +869,15 @@
       
       // تحديث نصوص الزر
       document.querySelectorAll('.view-profile-btn').forEach(btn => {
-        btn.innerHTML = 'عرض الملف الشخصي <i class="fas fa-arrow-left ms-2"></i>';
+        btn.innerHTML = 'عرض الملف الشخصي <i class="fa-brands fa-whatsapp"></i>
+';
       });
     }
   });
 </script>
+<div?>
+<p>  jbnhoujhdjkghkjdghkjsgtUOTYHsgtjHLTFKLJSZPHLOYKGNKGZK </p>
+</div>
+
 </body>
 </html>
