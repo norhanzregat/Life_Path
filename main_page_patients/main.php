@@ -7,678 +7,657 @@
     <title>Life Path Clinic - Main</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
- <!-- رابط الخط Inter من Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<style>
-:root {
-    --primary-blue: #0266D1;
-    --secondary-blue: #1a7eff;
-    --light-blue: #e3f2fd;
-    --accent-teal: #26c6da;
-    --text-dark: #2d3748;
-    --text-light: #718096;
-}
-.footer {
-    background-color: rgba(0,0,0,0.85);
-    color: #fff;
-    padding: 40px 0;
-}
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #93c5fd;
+            --secondary-color: #0ea5e9;
+            --accent-color: #f97316;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --transition: all 0.3s ease;
+        }
 
-.footer a {
-    color: #42a5f5;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-.footer a:hover {
-    color: #1a7eff;
-    text-decoration: underline;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
 
-.footer h5 {
-    font-weight: 700;
-    color: #fff;
-}
+        /* Navbar Styles */
+        .navbar {
+            background: var(--bg-white);
+            box-shadow: var(--shadow-sm);
+            padding: 0.75rem 0;
+        }
 
-.footer ul li {
-    margin-bottom: 8px;
-}
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
 
-.footer ul li a {
-    font-size: 0.95rem;
-}
+        .navbar-brand:hover {
+            transform: scale(1.03);
+        }
 
-.footer form input {
-    border-radius: 30px;
-    padding: 5px 15px;
-    flex: 1;
-}
+        .logo-img {
+            height: 40px;
+            margin-right: 10px;
+        }
 
-.footer form button {
-    border-radius: 30px;
-    padding: 5px 20px;
-}
+        .navbar .nav-link {
+            font-weight: 600;
+            color: var(--text-dark);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
 
-@media(max-width: 768px) {
-    .footer .text-md-start, .footer .text-md-end {
-        text-align: center !important;
-    }
-    .footer iframe {
-        margin-top: 15px;
-        height: 200px;
-    }
-    .footer form {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-body {
-    font-family: 'Inter', 'Poppins', 'Segoe UI', 'Helvetica Neue', sans-serif;
-    margin: 0;
-    padding: 0;
+        .navbar .nav-link:hover {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+        }
 
-    background: linear-gradient(120deg, #B3CEFBFF, #3381E8FF, #024892FF);
-    background-size: 300% 300%;
-    animation: calmGradient 20s ease-in-out infinite;
+        .navbar .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
 
-    color: #333;
-    min-height: 100vh;
-    line-height: 1.6;
-}
+        .logout-btn {
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
 
-@keyframes calmGradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+        .logout-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
 
-/* Navbar Styles */
-.navbar {
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px 0;
-}
+        .profile-link {
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
 
-.navbar-brand {
-    font-family: 'Inter', 'Poppins', 'Segoe UI', 'Helvetica Neue', sans-serif;
-    font-weight: 800;
-    font-size: 1.4rem;
-    color: var(--primary-blue) !important;
-    display: flex;
-    align-items: center;
-    transition: transform 0.3s ease-in-out;
-}
-.navbar-brand:hover { transform: scale(1.05); }
+        .profile-link:hover {
+            background: rgba(37, 99, 235, 0.1);
+        }
 
-.logo-img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-right: 10px;
-    border-radius: 5px;
-}
+        /* Stats Section */
+        .stats-section {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
 
-.navbar .nav-link {
-    font-family: 'Inter', 'Poppins', 'Segoe UI', 'Helvetica Neue', sans-serif;
-    font-weight: 700;
-    color: #333;
-    position: relative;
-    padding: 8px 14px;
-    border-radius: 8px;
-    letter-spacing: 0.5px;
-    font-size: 1rem;
-    transition: all 0.3s ease-in-out;
-}
-.navbar .nav-link:hover {
-    background-color: rgba(2, 102, 209, 0.15);
-    color: var(--primary-blue);
-    transform: translateY(-2px);
-}
-.navbar .nav-link::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0%;
-    height: 2px;
-    background: var(--primary-blue);
-    transition: all 0.3s ease-in-out;
-    transform: translateX(-50%);
-}
-.navbar .nav-link:hover::after { width: 100%; }
+        .stats-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            height: 100%;
+            border: 1px solid var(--border-color);
+        }
 
-/* Buttons (Logout) */
-.logout-btn {
-    font-family: 'Inter', 'Poppins', 'Segoe UI', 'Helvetica Neue', sans-serif;
-    font-weight: 700;
-    border-radius: 12px;
-    transition: all 0.3s ease-in-out;
-    letter-spacing: 0.5px;
-}
-.logout-btn:hover {
-    background-color: var(--primary-blue);
-    color: #fff;
-    transform: scale(1.05);
-}
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
 
-/* Profile */
-.profile-link {
-    font-family: 'Inter', 'Poppins', 'Segoe UI', 'Helvetica Neue', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 0.5px;
-    border-radius: 12px;
-    padding: 6px 12px;
-    transition: all 0.3s ease-in-out;
-}
-.profile-link:hover {
-    background: rgba(2, 102, 209, 0.1);
-    transform: translateY(-2px);
-}
-.profile-link img {
-    transition: transform 0.3s ease-in-out;
-}
-.profile-link:hover img { transform: rotate(10deg) scale(1.1); }
+        .stats-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
 
-/* Hero Section */
-.hero {
-    background: rgba(255, 255, 255, 0.7);
-    color: #0d47a1;
-    padding: 80px 20px;
-    border-radius: 20px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(8px);
-    text-align: center;
-    margin-top: 30px;
-}
-.hero h1 { font-weight: 700; font-size: 2.8rem; }
-.hero p { font-size: 1.2rem; }
+        .stats-label {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
 
-.btn-custom {
-    background-color: var(--primary-blue);
-    color: #fff;
-    font-weight: 600;
-    border-radius: 50px;
-    padding: 10px 25px;
-    transition: all 0.3s ease;
-}
-.btn-custom:hover {
-    background-color: var(--secondary-blue);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(2, 102, 209, 0.3);
-}
+        /* Hero Section */
+        .hero {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem 2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
 
-/* Stats Cards */
-.stats-card {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
-    height: 100%;
-    border: 1px solid rgba(2, 102, 209, 0.1);
-    margin-bottom: 20px;
-}
-.stats-card:hover { transform: translateY(-5px); }
-.stats-number {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: var(--primary-blue);
-    margin-bottom: 5px;
-}
-.stats-label { color: var(--text-light); font-size: 0.95rem; }
+        .hero h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
 
-/* Appointment Widget */
-#appointmentsWidget {
-    position: fixed;
-    top: 100px;
-    right: 20px;
-    width: 320px;
-    max-height: 450px;
-    overflow-y: auto;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.95);
-    z-index: 1050;
-    padding: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-#appointmentsWidget h5 { margin-bottom: 10px; color: var(--primary-blue); }
-#appointmentsList li {
-    margin-bottom: 8px;
-    border-radius: 8px;
-    padding: 10px;
-    background: rgba(227, 242, 253, 0.5);
-}
+        .hero h2 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
 
-/* Footer */
-.footer {
-    background-color: rgba(0, 0, 0, 0.85);
-    color: #fff;
-    padding: 40px 0;
-    text-align: center;
-    margin-top: 50px;
-}
-.footer a { color: #42a5f5; text-decoration: none; }
-.footer a:hover { text-decoration: underline; }
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
 
-/* Profile Modal */
-.profile-img-container { position: relative; width: 150px; margin: 0 auto 20px; }
-.profile-img {
-    width: 150px; height: 150px; border-radius: 50%; object-fit: cover;
-    border: 4px solid var(--primary-blue);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-.profile-change-btn {
-    position: absolute; bottom: 10px; right: 10px;
-    background: white; width: 36px; height: 36px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    color: var(--primary-blue); cursor: pointer;
-}
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 0.75rem 2rem;
+            transition: var(--transition);
+            border: none;
+        }
 
-/* Navbar Pills */
-.nav-pills-custom .nav-link {
-    color: var(--text-dark);
-    border-radius: 10px;
-    margin-bottom: 10px;
-    padding: 12px 20px;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-.nav-pills-custom .nav-link.active {
-    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-    color: white;
-}
-.nav-pills-custom .nav-link:hover:not(.active) { background: rgba(2, 102, 209, 0.1); }
+        .btn-custom:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
 
-/* Section Titles */
-.section-title {
-    color: var(--primary-blue);
-    border-bottom: 2px solid var(--light-blue);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    font-weight: 700;
-}
+        /* Booking Section */
+        .booking-container {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+        }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    #appointmentsWidget { width: 90%; right: 5%; bottom: 20px; top: auto; }
-    .hero { padding: 40px 15px; }
-    .hero h1 { font-size: 2.2rem; }
-    .booking-progress { padding: 0 10px; }
-    .progress-step { width: 50px; }
-    .progress-step::before { width: 30px; height: 30px; }
-    .step-title { font-size: 0.7rem; }
-}
-#bookingModal,
-#bookingModal .modal-content,
-#bookingModal .modal-header,
-#bookingModal .modal-body,
-#bookingModal .form-label,
-#bookingModal .form-control,
-#bookingModal .form-select,
-#bookingModal .step-title,
-#bookingModal .btn,
-#bookingModal h4,
-#bookingModal h2,
-#bookingModal h6 {
-    font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
-}
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
 
-/* Modal general */
-#bookingModal .modal-content {
-    border-radius: 20px;
-    background: rgba(255,255,255,0.95);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    padding: 30px;
-    overflow: hidden;
-    position: relative;
-}
+        .booking-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
 
-/* Modal header */
-#bookingModal .modal-header {
-    border-bottom: none;
-    padding-bottom: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .booking-progress::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--border-color);
+            z-index: 1;
+        }
 
-#bookingModal .modal-header h2 {
-    font-weight: 700;
-    font-size: 1.8rem;
-    color: #0266D1;
-}
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+        }
 
-#bookingModal .modal-header i {
-    color: var(--primary-blue);
-}
+        .progress-step::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
 
-/* Close button */
-#bookingModal .btn-close {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #f5f5f5;
-    border: none;
-    transition: all 0.3s ease;
-}
-#bookingModal .btn-close:hover {
-    background-color: #0266D1;
-    transform: rotate(90deg);
-}
+        .progress-step.active::before {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
 
-/* Booking progress steps */
-.booking-progress {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 40px;
-    position: relative;
-}
-.booking-progress::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background-color: #e9ecef;
-    z-index: 1;
-}
-.progress-step {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 70px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.progress-step::before {
-    content: '';
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #e9ecef;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    margin-bottom: 8px;
-    transition: all 0.3s ease;
-}
-.progress-step.active::before {
-    background: linear-gradient(135deg, #0266D1, #1a7eff);
-    color: white;
-    box-shadow: 0 0 0 4px rgba(2,102,209,0.2);
-}
-.progress-step.completed::before {
-    background: linear-gradient(135deg, #0266D1, #1a7eff);
-    color: white;
-    content: '✓';
-}
-.progress-step .step-title {
-    font-size: 0.8rem;
-    color: #6c757d;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-.progress-step.active .step-title {
-    color: #0266D1;
-    font-weight: 600;
-}
+        .progress-step.completed::before {
+            background: var(--primary-color);
+            color: white;
+            content: '✓';
+        }
 
-/* Booking steps */
-.booking-step {
-    display: none;
-    animation: fadeIn 0.5s ease forwards;
-}
-.booking-step.active { display: block; }
+        .step-title {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-align: center;
+            font-weight: 500;
+        }
 
-/* Fade animation */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        .progress-step.active .step-title {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
 
-/* Navigation buttons */
-.navigation-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-}
-.navigation-buttons .btn {
-    border-radius: 50px;
-    font-weight: 600;
-    padding: 10px 25px;
-    transition: all 0.3s ease;
-}
-.navigation-buttons .btn.btn-custom:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(2,102,209,0.3);
-}
-.navigation-buttons .btn.btn-secondary:hover {
-    background-color: #1a7eff;
-    color: #fff;
-}
+        /* Form Elements */
+        .form-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
 
-/* Payment options */
-.payment-option {
-    border: 2px solid #e9ecef;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 20px;
-    background: #f8f9fa;
-}
-.payment-option:hover {
-    border-color: #0266D1;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(2,102,209,0.15);
-}
-.payment-option.selected {
-    border-color: #0266D1;
-    background: rgba(2,102,209,0.05);
-}
+        .form-control, .form-select {
+            border-radius: var(--radius-md);
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
 
-/* Card details */
-#cardDetails input {
-    border-radius: 10px;
-    padding: 10px;
-}
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.2);
+        }
 
-/* Appointment confirmation card */
-.appointment-card {
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-.appointment-detail {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 8px;
-    margin-bottom: 10px;
-    border-bottom: 1px dashed #dee2e6;
-}
-.detail-label { font-weight: 600; color: #2d3748; }
+        /* Navigation Buttons */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
 
-/* Form labels & inputs */
-#bookingModal .form-label {
-    font-weight: 600;
-    color: #2d3748;
-}
-#bookingModal .form-control,
-#bookingModal .form-select,
-#bookingModal textarea {
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #ced4da;
-    transition: all 0.3s ease;
-}
-#bookingModal .form-control:focus,
-#bookingModal .form-select:focus,
-#bookingModal textarea:focus {
-    border-color: #0266D1;
-    box-shadow: 0 0 0 0.2rem rgba(2,102,209,0.2);
-}
+        .btn-secondary {
+            background-color: var(--text-light);
+            border: none;
+            border-radius: 50px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
 
-/* Responsive */
-@media(max-width: 768px) {
-    #bookingModal .modal-content { padding: 20px; }
-    .progress-step { width: 50px; }
-    .progress-step::before { width: 30px; height: 30px; }
-    .step-title { font-size: 0.7rem; }
-}
-/* Widget container */
-#appointmentsWidget {
-    position: fixed;
-    top: 100px;
-    right: 20px;
-    width: 320px;
-    max-height: 450px;
-    overflow-y: auto;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-    z-index: 1050;
-    padding: 15px;
-    transition: all 0.4s ease-in-out;
-    font-family: 'Poppins', sans-serif;
-}
+        .btn-secondary:hover {
+            background-color: var(--text-dark);
+            color: white;
+        }
 
-/* Header */
-#appointmentsWidget h5 {
-    font-size: 1.1rem;
-    color: #0266D1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
+        /* Doctor Cards */
+        .doctor-card {
+            background: var(--bg-light);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
 
-/* Toggle button */
-.toggle-widget {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: #0266D1;
-    transition: transform 0.3s ease;
-}
-.toggle-widget:hover {
-    transform: rotate(90deg);
-}
+        .doctor-card:hover, .doctor-card.selected {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
 
-/* Appointment list */
-#appointmentsList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-#appointmentsList li {
-    margin-bottom: 10px;
-    border-radius: 10px;
-    padding: 10px;
-    background: rgba(2, 102, 209, 0.05);
-    transition: all 0.3s ease;
-}
-#appointmentsList li:hover {
-    background: rgba(2, 102, 209, 0.15);
-    transform: translateY(-2px);
-}
+        /* Calendar */
+        .calendar-container {
+            background: var(--bg-light);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
 
-/* Collapsed state */
-#appointmentsWidget.collapsed {
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
-    padding: 5px;
-    border-radius: 50%;
-}
-#appointmentsWidget.collapsed h5,
-#appointmentsWidget.collapsed #appointmentsList {
-    display: none;
-}
+        .calendar-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
 
-/* Responsive */
-@media(max-width:768px) {
-    #appointmentsWidget {
-        width: 90%;
-        right: 5%;
-        top: auto;
-        bottom: 20px;
-        max-height: 350px;
-    }
-}
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
 
-</style>
+        .calendar-day {
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .calendar-day:hover {
+            background-color: var(--primary-light);
+        }
+
+        .calendar-day.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .calendar-day.disabled {
+            color: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        .calendar-day.today {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* Time Slots */
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .time-slot {
+            text-align: center;
+            padding: 0.75rem;
+            background: var(--bg-light);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .time-slot:hover, .time-slot.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .time-slot.unavailable {
+            background-color: var(--border-color);
+            color: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        /* Appointment Card */
+        .appointment-card {
+            background: var(--bg-light);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .appointment-detail {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 0.75rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Payment Options */
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-option {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-option:hover, .payment-option.selected {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer a {
+            color: var(--primary-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer h5 {
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.25rem;
+            }
+            
+            .progress-step {
+                width: 60px;
+            }
+            
+            .progress-step::before {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .step-title {
+                font-size: 0.7rem;
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+            
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Success Page */
+        .payment-success {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .payment-success i {
+            font-size: 4rem;
+            color: var(--success-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Table Styles */
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .bookings-table th, .bookings-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .bookings-table th {
+            font-weight: 600;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
+        }
+
+        .status-confirmed {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+
+        .status-completed {
+            background-color: rgba(37, 99, 235, 0.2);
+            color: var(--primary-color);
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: var(--radius-lg);
+            border: none;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-pills-custom .nav-link {
+            color: var(--text-dark);
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+            padding: 0.75rem 1rem;
+            transition: var(--transition);
+        }
+
+        .nav-pills-custom .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Toast Notification */
+        .toast-container {
+            z-index: 9999;
+        }
+
+        /* Payment Page */
+        .payment-page {
+            display: none;
+        }
+
+        .payment-details {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg shadow-sm">
-    <div class="container">
-        <!-- Logo + Clinic Name -->
-        <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
-            <img src="../assets/images/life.png" alt="Life Path Logo" class="logo-img"
-                style="height: 40px; margin-right: 8px;">
-            Life Path
-        </a>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <!-- Logo + Clinic Name -->
+            <a class="navbar-brand" href="#">
+                <img src="../assets/images/life.png" alt="Life Path Logo" class="logo-img">
+                Life Path
+            </a>
 
-        <!-- Toggler (mobile menu button) -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Navbar content -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <!-- Center Menu -->
-            <ul class="navbar-nav mx-auto align-items-center">
-                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="../doctors/specialists/specialists.php">Our Doctors</a></li>
-                <li class="nav-item"><a class="nav-link" href="#bookingModal" data-bs-toggle="modal">Book Appointment</a></li>
-            </ul>
-
-            <!-- Right Side (Profile + Logout) -->
-            <ul class="navbar-nav ms-auto align-items-center">
-                <!-- Profile -->
-                <li class="nav-item">
-                    <a href="#" class="d-flex align-items-center nav-link profile-link" data-bs-toggle="modal"
-                        data-bs-target="#profileModal">
-                        <img src="https://ui-avatars.com/api/?name=John+Doe&background=0266D1&color=fff"
-                            class="user-avatar me-2 rounded-circle" style="height: 35px; width: 35px;"
-                            id="navbarUserAvatar">
-                        <span>Hello, John</span>
-                    </a>
-                </li>
-
-                <!-- Logout -->
-                <li class="nav-item">
-                    <a class="btn btn-outline-primary ms-3 logout-btn" href="../index.php">
-                        <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-
-    <!-- Hero Section -->
-    <div class="container">
-        <div class="hero mb-5">
-            <h1>Welcome, John!</h1>
-            <p class="lead">Your mental well-being is our priority. Explore our services and book your session today.
-            </p>
-            <button class="btn btn-custom mt-3" data-bs-toggle="modal" data-bs-target="#bookingModal">
-                <i class="fa-solid fa-calendar-plus me-2"></i>Book Appointment
+            <!-- Toggler (mobile menu button) -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
             </button>
-        </div>
 
+            <!-- Navbar content -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Center Menu -->
+                <ul class="navbar-nav mx-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../doctors/specialists/specialists.php">Our Doctors</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a></li>
+                </ul>
+
+                <!-- Right Side (Profile + Logout) -->
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <!-- Profile -->
+                    <li class="nav-item">
+                        <a href="#" class="d-flex align-items-center nav-link profile-link" data-bs-toggle="modal" data-bs-target="#profileModal">
+                            <img src="https://ui-avatars.com/api/?name=Norhan+Ahmed&background=2563eb&color=fff" class="user-avatar me-2 rounded-circle" style="height: 35px; width: 35px;" id="navbarUserAvatar">
+                            <span>Hello, Norhan</span>
+                        </a>
+                    </li>
+
+                    <!-- Logout -->
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary ms-3 logout-btn" href="../index.php">
+                            <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
         <!-- Stats Section -->
-        <div class="row mb-5">
+        <div class="row stats-section">
             <div class="col-md-3 col-6">
                 <div class="stats-card">
                     <div class="stats-number">3</div>
@@ -705,88 +684,347 @@ body {
             </div>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="row mb-5">
-            <div class="col-md-4 mb-3">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center">
-                        <i class="fa-solid fa-calendar-days fa-3x text-primary mb-3"></i>
-                        <h5>Appointment History</h5>
-                        <p class="text-muted">View your past and upcoming appointments</p>
-                        <button class="btn btn-outline-primary" data-bs-toggle="modal"
-                            data-bs-target="#appointmentsModal">
-                            View Appointments
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center">
-                        <i class="fa-solid fa-user-doctor fa-3x text-primary mb-3"></i>
-                        <h5>Our Doctors</h5>
-                        <p class="text-muted">Meet our team of specialists</p>
-                        <a href="../doctors/specialists/specialists.php"" class=" btn btn-outline-primary">View
-                            Doctors</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center">
-                        <i class="fa-solid fa-file-medical fa-3x text-primary mb-3"></i>
-                        <h5>Medical Records</h5>
-                        <p class="text-muted">Access your health information</p>
-                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#profileModal">
-                            View Profile
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Welcome Norhan</h1>
+            <h2>Start booking your appointment now</h2>
+            <p class="lead">Your mental health is our priority. Choose the department and doctor and schedule an appointment that suits you.</p>
         </div>
-    </div>
 
-    <!-- لوحة المواعيد الجانبية -->
-<div id="appointmentsWidget">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-            <h5 class="mb-0">
-                <i class="fa-solid fa-calendar-days me-2"></i>Upcoming Appointments
-                <button class="toggle-widget ms-2" onclick="toggleAppointmentsWidget()">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </h5>
-        </div>
-        
-        <div class="widget-content">
-            <ul class="list-group list-group-flush" id="appointmentsList">
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <strong>2025-09-15 10:00 AM</strong><br>
-                            <small>Dr. Sarah Johnson | Online</small>
-                        </div>
-                        <span class="appointment-badge bg-success">Confirmed</span>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <strong>2025-09-22 2:30 PM</strong><br>
-                            <small>Dr. Ahmed Ali | In-Clinic</small>
-                        </div>
-                        <span class="appointment-badge bg-warning text-dark">Pending</span>
-                    </div>
-                </li>
-            </ul>
+        <!-- Booking Section -->
+        <div class="booking-container" id="bookingPage">
+            <h2 class="section-title">Book an Appointment</h2>
             
-            <div class="text-center mt-3">
-                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#bookingModal">
-                    <i class="fa-solid fa-plus me-1"></i>New Appointment
-                </button>
+            <!-- Progress Indicator -->
+            <div class="booking-progress">
+                <div class="progress-step active" id="step1Indicator">
+                    <div class="step-number">1</div>
+                    <span class="step-title">Personal Info</span>
+                </div>
+                <div class="progress-step" id="step2Indicator">
+                    <div class="step-number">2</div>
+                    <span class="step-title">Select Doctor</span>
+                </div>
+                <div class="progress-step" id="step3Indicator">
+                    <div class="step-number">3</div>
+                    <span class="step-title">Choose Time</span>
+                </div>
+                <div class="progress-step" id="step4Indicator">
+                    <div class="step-number">4</div>
+                    <span class="step-title">Confirm</span>
+                </div>
+                <div class="progress-step" id="step5Indicator">
+                    <div class="step-number">5</div>
+                    <span class="step-title">Payment</span>
+                </div>
+            </div>
+
+            <!-- Step 1: Personal Information -->
+            <div class="booking-step active" id="step1">
+                <h4 class="mb-4">Personal Information</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="bookingFullName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="bookingFullName" name="bookingFullName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="bookingEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="bookingEmail" name="bookingEmail" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="bookingPhone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="bookingPhone" name="bookingPhone" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="bookingNationalID" class="form-label">National ID</label>
+                        <input type="text" class="form-control" id="bookingNationalID" name="bookingNationalID" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="bookingAge" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="bookingAge" name="bookingAge" required>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="bookingNotes" class="form-label">Notes (optional)</label>
+                        <textarea class="form-control" id="bookingNotes" name="bookingNotes" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="navigation-buttons">
+                    <div></div>
+                    <button type="button" class="btn btn-custom" onclick="nextStep(1)">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Department & Doctor -->
+            <div class="booking-step" id="step2">
+                <h4 class="mb-4">Select Department & Doctor</h4>
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <label class="form-label">Choose Department</label>
+                        <select class="form-select" id="department" name="department" required onchange="loadDoctors()">
+                            <option value="">Select department...</option>
+                            <option value="psychology">Psychology</option>
+                            <option value="autism">Autism Disorder</option>
+                            <option value="neurology">Neurology</option>
+                            <option value="rehabilitation">Medical Rehabilitation</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Choose Doctor</label>
+                        <div id="doctorsContainer">
+                            <p class="text-center text-muted py-4">Please select a department to view available doctors</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="navigation-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Previous</button>
+                    <button type="button" class="btn btn-custom" onclick="nextStep(2)">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Appointment -->
+            <div class="booking-step" id="step3">
+                <h4 class="mb-4">Choose Appointment</h4>
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div class="calendar-container">
+                            <div class="calendar-navigation">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="changeMonth(-1)">
+                                    <i class="fa-solid fa-chevron-left me-1"></i> Previous Month
+                                </button>
+                                <h5 id="currentMonth" class="mb-0">Month 2023</h5>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="changeMonth(1)">
+                                    Next Month <i class="fa-solid fa-chevron-right ms-1"></i>
+                                </button>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid">
+                                <!-- Calendar generated via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Available Time Slots</label>
+                        <div class="time-slots" id="timeSlots">
+                            <!-- Time slots generated via JS -->
+                        </div>
+                    </div>
+                </div>
+                <div class="navigation-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Previous</button>
+                    <button type="button" class="btn btn-custom" onclick="nextStep(3)">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Confirm Booking -->
+            <div class="booking-step" id="step4">
+                <h4 class="mb-4">Confirm Booking</h4>
+                <div class="appointment-card">
+                    <h5 class="mb-3">Appointment Details</h5>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Name:</span>
+                        <span id="confirmName"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Email:</span>
+                        <span id="confirmEmail"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Phone:</span>
+                        <span id="confirmPhone"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">National ID:</span>
+                        <span id="confirmNationalID"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Department:</span>
+                        <span id="confirmDepartment"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Doctor:</span>
+                        <span id="confirmDoctor"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Date & Time:</span>
+                        <span id="confirmDateTime"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Booking ID:</span>
+                        <span id="confirmBookingId" class="booking-id-display"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Status:</span>
+                        <span class="status-badge status-pending">Pending Payment</span>
+                    </div>
+                </div>
+
+                <div class="form-check mt-3 mb-4">
+                    <input class="form-check-input" type="checkbox" id="termsAgreement" required>
+                    <label class="form-check-label" for="termsAgreement">
+                        I agree to the terms and conditions
+                    </label>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(4)">Previous</button>
+                    <button type="button" class="btn btn-custom" onclick="nextStep(4)">Proceed to Payment</button>
+                </div>
+            </div>
+
+            <!-- Step 5: Payment -->
+            <div class="booking-step" id="step5">
+                <h4 class="mb-4">Complete Payment</h4>
+                
+                <div class="appointment-card mb-4">
+                    <h5 class="mb-3">Booking Information</h5>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Booking ID:</span>
+                        <span id="paymentBookingId"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Name:</span>
+                        <span id="paymentName"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Doctor:</span>
+                        <span id="paymentDoctor"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Date & Time:</span>
+                        <span id="paymentDateTime"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Amount Due:</span>
+                        <span class="fw-bold text-success">150 SAR</span>
+                    </div>
+                </div>
+
+                <h5 class="mb-3">Select Payment Method</h5>
+
+                <div class="payment-options mb-4">
+                    <div class="payment-option" onclick="selectPayment('credit-card')">
+                        <i class="fa-solid fa-credit-card fa-2x mb-2"></i>
+                        <h6>Credit Card</h6>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment('mada')">
+                        <i class="fa-solid fa-credit-card fa-2x mb-2"></i>
+                        <h6>Mada</h6>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment('apple-pay')">
+                        <i class="fa-brands fa-apple-pay fa-2x mb-2"></i>
+                        <h6>Apple Pay</h6>
+                    </div>
+                </div>
+
+                <!-- Credit Card Details -->
+                <div class="payment-details" id="creditCardDetails">
+                    <h5 class="mb-3">Card Information</h5>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="cardNumber" class="form-label">Card Number</label>
+                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="expiryDate" class="form-label">Expiry Date</label>
+                            <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="cvv" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cvv" placeholder="123">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="cardHolder" class="form-label">Card Holder</label>
+                            <input type="text" class="form-control" id="cardHolder" placeholder="John Doe">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mada Card Details -->
+                <div class="payment-details" id="madaDetails">
+                    <h5 class="mb-3">Mada Card Information</h5>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="madaCardNumber" class="form-label">Card Number</label>
+                            <input type="text" class="form-control" id="madaCardNumber" placeholder="1234 5678 9012 3456">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-check mt-3 mb-4">
+                    <input class="form-check-input" type="checkbox" id="paymentAgreement" required>
+                    <label class="form-check-label" for="paymentAgreement">
+                        I authorize deduction from my bank card
+                    </label>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(5)">Previous</button>
+                    <button type="button" class="btn btn-success" id="completePayment">Complete Payment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Page (hidden initially) -->
+        <div class="booking-container mt-4" id="successPage" style="display: none;">
+            <div class="payment-success">
+                <i class="fa-solid fa-check-circle"></i>
+                <h3 class="text-success">Payment Successful!</h3>
+                <p class="lead">Your appointment has been confirmed</p>
+
+                <div class="appointment-card mt-4 mx-auto" style="max-width: 500px;">
+                    <h5 class="mb-3">Booking Details</h5>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Booking ID:</span>
+                        <span id="successBookingId"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Name:</span>
+                        <span id="successName"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Doctor:</span>
+                        <span id="successDoctor"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Date & Time:</span>
+                        <span id="successDateTime"></span>
+                    </div>
+                    <div class="appointment-detail">
+                        <span class="detail-label">Payment Status:</span>
+                        <span class="badge bg-success">Completed</span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="button" class="btn btn-primary me-2" onclick="printBooking()">Print Details</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="newBooking()">New Booking</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Previous Bookings -->
+        <div class="booking-container">
+            <h4 class="section-title">Previous Bookings</h4>
+            <div class="table-responsive">
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTableBody">
+                        <!-- Filled via JavaScript -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
 
     <!-- Profile Modal -->
     <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
@@ -797,32 +1035,29 @@ body {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="profile-img-container">
-                        <img src="https://ui-avatars.com/api/?name=John+Doe&background=0266D1&color=fff"
-                            class="profile-img" id="modalProfileImg">
-                        <div class="profile-change-btn" onclick="document.getElementById('profilePhotoInput').click()">
-                            <i class="fa-solid fa-camera"></i>
+                    <div class="profile-img-container text-center mb-4">
+                        <img src="https://ui-avatars.com/api/?name=Norhan+Ahmed&background=2563eb&color=fff" class="profile-img" id="modalProfileImg">
+                        <div class="mt-3">
+                            <input type="file" id="profilePhotoInput" class="d-none" accept="image/*">
+                            <button class="btn btn-outline-primary" onclick="document.getElementById('profilePhotoInput').click()">
+                                <i class="fa-solid fa-camera me-2"></i>Change Photo
+                            </button>
                         </div>
-                        <input type="file" id="profilePhotoInput" class="d-none" accept="image/*">
                     </div>
 
-                    <ul class="nav nav-pills nav-pills-custom mb-4 justify-content-center" id="profileTabs"
-                        role="tablist">
+                    <ul class="nav nav-pills nav-pills-custom mb-4 justify-content-center" id="profileTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="info-tab" data-bs-toggle="pill" data-bs-target="#info"
-                                type="button" role="tab">
+                            <button class="nav-link active" id="info-tab" data-bs-toggle="pill" data-bs-target="#info" type="button" role="tab">
                                 <i class="fa-solid fa-user me-2"></i>Personal Info
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="appointments-tab" data-bs-toggle="pill"
-                                data-bs-target="#appointments" type="button" role="tab">
+                            <button class="nav-link" id="appointments-tab" data-bs-toggle="pill" data-bs-target="#appointments" type="button" role="tab">
                                 <i class="fa-solid fa-calendar-days me-2"></i>Appointments
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="health-tab" data-bs-toggle="pill" data-bs-target="#health"
-                                type="button" role="tab">
+                            <button class="nav-link" id="health-tab" data-bs-toggle="pill" data-bs-target="#health" type="button" role="tab">
                                 <i class="fa-solid fa-heart-pulse me-2"></i>Health Data
                             </button>
                         </li>
@@ -835,12 +1070,11 @@ body {
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Full Name</label>
-                                        <input type="text" class="form-control" id="fullName" value="John Doe" required>
+                                        <input type="text" class="form-control" id="fullName" value="Norhan Ahmed" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Email Address</label>
-                                        <input type="email" class="form-control" id="email" value="johndoe@example.com"
-                                            required>
+                                        <input type="email" class="form-control" id="email" value="norhan@example.com" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Phone Number</label>
@@ -852,8 +1086,7 @@ body {
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <label class="form-label">Address</label>
-                                        <textarea class="form-control" id="address"
-                                            rows="2">123 Main St, City, Country</textarea>
+                                        <textarea class="form-control" id="address" rows="2">123 Main St, City, Country</textarea>
                                     </div>
                                 </div>
                                 <div class="text-center mt-4">
@@ -919,337 +1152,704 @@ body {
         </div>
     </div>
 
-    <!-- Booking Modal -->
-    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content p-4">
-                <div class="modal-header border-0">
-                    <h2 class="modal-title" id="bookingModalLabel">
-                        <i class="fa-solid fa-calendar-check me-2"></i>Book Your Appointment
-                    </h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- مؤشر التقدم -->
-                    <div class="booking-progress mb-5">
-                        <div class="progress-step active" id="step1Indicator">
-                            <span class="step-title">Information</span>
-                        </div>
-                        <div class="progress-step" id="step2Indicator">
-                            <span class="step-title">Appointment</span>
-                        </div>
-                        <div class="progress-step" id="step3Indicator">
-                            <span class="step-title">Payment</span>
-                        </div>
-                        <div class="progress-step" id="step4Indicator">
-                            <span class="step-title">Confirmation</span>
-                        </div>
-                    </div>
-
-                    <!-- الخطوة 1: المعلومات الشخصية -->
-                    <div class="booking-step active" id="step1">
-                        <h4 class="mb-4">Personal Information</h4>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="bookingFullName" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="bookingFullName" name="bookingFullName"
-                                    required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="bookingEmail" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="bookingEmail" name="bookingEmail" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="bookingPhone" class="form-label">Telephone Number</label>
-                                <input type="tel" class="form-control" id="bookingPhone" name="bookingPhone" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="bookingAge" class="form-label">Age</label>
-                                <input type="number" class="form-control" id="bookingAge" name="bookingAge" required>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <label for="bookingNotes" class="form-label">Notes (optional)</label>
-                                <textarea class="form-control" id="bookingNotes" name="bookingNotes"
-                                    rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="navigation-buttons">
-                            <div></div> <!-- Empty alignment element -->
-                            <button type="button" class="btn btn-custom" onclick="nextStep(1)">Next</button>
-                        </div>
-                    </div>
-
-                    <!-- الخطوة 2: تفاصيل الموعد -->
-                    <div class="booking-step" id="step2">
-                        <h4 class="mb-4">Appointment Details</h4>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Session Type</label>
-                                <select class="form-select" id="appointmentType" name="appointmentType" required>
-                                    <option value="">Select type...</option>
-                                    <option value="In-Clinic">In-Clinic</option>
-                                    <option value="Online (Video Session)">Online (Video Session)</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Select Doctor</label>
-                                <select class="form-select" id="doctor" name="doctor" required>
-                                    <option value="">Select doctor...</option>
-                                    <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
-                                    <option value="Dr. Ahmed Ali">Dr. Ahmed Ali</option>
-                                    <option value="Dr. Lina Haddad">Dr. Lina Haddad</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Select Date</label>
-                                <input type="date" class="form-control" id="appointmentDate" name="appointmentDate"
-                                    required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Select Time</label>
-                                <select class="form-select" id="appointmentTime" name="appointmentTime" required>
-                                    <option value="">Select time...</option>
-                                    <option value="09:00">09:00 AM</option>
-                                    <option value="10:00">10:00 AM</option>
-                                    <option value="11:00">11:00 AM</option>
-                                    <option value="12:00">12:00 PM</option>
-                                    <option value="13:00">01:00 PM</option>
-                                    <option value="14:00">02:00 PM</option>
-                                    <option value="15:00">03:00 PM</option>
-                                    <option value="16:00">04:00 PM</option>
-                                    <option value="17:00">05:00 PM</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="navigation-buttons">
-                            <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Previous</button>
-                            <button type="button" class="btn btn-custom" onclick="nextStep(2)">Next</button>
-                        </div>
-                    </div>
-
-                    <!-- Step 3: Payment Method -->
-                    <div class="booking-step" id="step3">
-                        <h4 class="mb-4">Payment Method</h4>
-
-                        <!-- Payment Options Cards -->
-                        <div class="row mb-4">
-                            <div class="col-md-4 mb-3">
-                                <div class="card payment-option text-center p-3" onclick="selectPayment('card')">
-                                    <i class="fa-solid fa-credit-card fa-2x mb-2"></i>
-                                    <h6>Credit/Debit Card</h6>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="card payment-option text-center p-3" onclick="selectPayment('paypal')">
-                                    <i class="fa-brands fa-paypal fa-2x mb-2"></i>
-                                    <h6>PayPal</h6>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="card payment-option text-center p-3" onclick="selectPayment('cash')">
-                                    <i class="fa-solid fa-money-bill-wave fa-2x mb-2"></i>
-                                    <h6>Cash (at clinic)</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card Details Form (Hidden by default) -->
-                        <div id="cardDetails" style="display: none;">
-                            <div class="row">
-                                <div class="col-md-12 mb-3">
-                                    <label for="cardNumber" class="form-label">Card Number</label>
-                                    <input type="text" class="form-control" id="cardNumber"
-                                        placeholder="1234 5678 9012 3456">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="expiryDate" class="form-label">Expiry Date</label>
-                                    <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="cvv" class="form-label">CVV</label>
-                                    <input type="text" class="form-control" id="cvv" placeholder="123">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="cardHolder" class="form-label">Card Holder Name</label>
-                                    <input type="text" class="form-control" id="cardHolder" placeholder="John Doe">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Navigation Buttons -->
-                        <div class="navigation-buttons">
-                            <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Previous</button>
-                            <button type="button" class="btn btn-custom" onclick="nextStep(3)">Next</button>
-                        </div>
-                    </div>
-
-                    <!-- Step 4: Confirmation -->
-                    <div class="booking-step" id="step4">
-                        <h4 class="mb-4">Booking Confirmation</h4>
-                        <div class="appointment-card" id="confirmationCard">
-                            <h4>Appointment Details</h4>
-                            <div class="appointment-detail">
-                                <span class="detail-label">Name:</span>
-                                <span id="confirmName"></span>
-                            </div>
-                            <div class="appointment-detail">
-                                <span class="detail-label">Email:</span>
-                                <span id="confirmEmail"></span>
-                            </div>
-                            <div class="appointment-detail">
-                                <span class="detail-label">Phone:</span>
-                                <span id="confirmPhone"></span>
-                            </div>
-                            <div class="appointment-detail">
-                                <span class="detail-label">Doctor:</span>
-                                <span id="confirmDoctor"></span>
-                            </div>
-                            <div class="appointment-detail">
-                                <span class="detail-label">Session Type:</span>
-                                <span id="confirmType"></span>
-                            </div>
-                            <div class="appointment-detail">
-                                <span class="detail-label">Date & Time:</span>
-                                <span id="confirmDateTime"></span>
-                            </div>
-                            <div class="appointment-detail">
-                                <span class="detail-label">Payment Method:</span>
-                                <span id="confirmPayment"></span>
-                            </div>
-                        </div>
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" id="termsAgreement" required>
-                            <label class="form-check-label" for="termsAgreement">
-                                I agree to the terms and conditions
-                            </label>
-                        </div>
-                        <div class="navigation-buttons mt-4">
-                            <button type="button" class="btn btn-secondary" onclick="prevStep(4)">Previous</button>
-                            <button type="button" class="btn btn-success" id="confirmBooking">Confirm Booking</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
-<footer class="footer mt-5">
-    <div class="container">
-        <div class="row align-items-start">
-            <!-- Left Side: Contact Info -->
-            <div class="col-md-4 text-md-start mb-4 mb-md-0">
-                <h5 class="mb-3">Life Path Clinic</h5>
-                <p>&copy; 2025 Life Path Clinic. All rights reserved.</p>
-                <p><strong>Address:</strong> 123 Main Street, Cityville, Country</p>
-                <p><strong>Phone:</strong> +1 234 567 890</p>
-                <p><strong>Email:</strong> <a href="mailto:info@lifepathclinic.com">info@lifepathclinic.com</a></p>
-                <p><strong>Working Hours:</strong> Mon-Fri: 8:00 AM - 6:00 PM | Sat: 9:00 AM - 3:00 PM</p>
-                <p>
-                    <a href="#"><i class="fa-brands fa-facebook me-2"></i></a>
-                    <a href="#"><i class="fa-brands fa-twitter me-2"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram me-2"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin me-2"></i></a>
-                </p>
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-start">
+                <!-- Left Side: Contact Info -->
+                <div class="col-md-4 text-md-start mb-4 mb-md-0">
+                    <h5>Life Path Clinic</h5>
+                    <p>&copy; 2025 Life Path Clinic. All rights reserved.</p>
+                    <p><strong>Address:</strong> 123 Main Street, Cityville, Country</p>
+                    <p><strong>Phone:</strong> +1 234 567 890</p>
+                    <p><strong>Email:</strong> <a href="mailto:info@lifepathclinic.com">info@lifepathclinic.com</a></p>
+                    <p><strong>Working Hours:</strong> Mon-Fri: 8:00 AM - 6:00 PM | Sat: 9:00 AM - 3:00 PM</p>
+                    <p>
+                        <a href="#"><i class="fa-brands fa-facebook me-2"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter me-2"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram me-2"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin me-2"></i></a>
+                    </p>
+                </div>
+
+                <!-- Middle Side: Quick Links -->
+                <div class="col-md-2 text-md-start mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Our Doctors</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Book Appointment</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Right Side: Map -->
+                <div class="col-md-6 text-md-end">
+                    <h5>Find Us Here</h5>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.548692888106!2d100.492615!3d13.736717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ed13a9c90f3%3A0x6a70a4d1d0e3b9de!2sBangkok!5e0!3m2!1sen!2sth!4v1694475910594!5m2!1sen!2sth"
+                        width="100%" height="250" style="border:0; border-radius:10px;" allowfullscreen=""
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
             </div>
 
-            <!-- Middle Side: Quick Links -->
-            <div class="col-md-2 text-md-start mb-4 mb-md-0">
-                <h5 class="mb-3">Quick Links</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Our Doctors</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Book Appointment</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
-
-            <!-- Right Side: Map -->
-            <div class="col-md-6 text-md-end">
-                <h5 class="mb-3">Find Us Here</h5>
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.548692888106!2d100.492615!3d13.736717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ed13a9c90f3%3A0x6a70a4d1d0e3b9de!2sBangkok!5e0!3m2!1sen!2sth!4v1694475910594!5m2!1sen!2sth"
-                    width="100%" height="250" style="border:0; border-radius:10px;" allowfullscreen=""
-                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <!-- Bottom Row: Newsletter -->
+            <div class="row mt-4">
+                <div class="col-md-6 text-md-start mb-3 mb-md-0">
+                    <h5 class="mb-2">Subscribe to our Newsletter</h5>
+                    <form class="d-flex">
+                        <input type="email" class="form-control me-2" placeholder="Your email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Designed by <a href="#">Life Path Team</a></p>
+                </div>
             </div>
         </div>
+    </footer>
 
-        <!-- Bottom Row: Newsletter -->
-        <div class="row mt-4">
-            <div class="col-md-6 text-md-start mb-3 mb-md-0">
-                <h5 class="mb-2">Subscribe to our Newsletter</h5>
-                <form class="d-flex">
-                    <input type="email" class="form-control me-2" placeholder="Your email" required>
-                    <button type="submit" class="btn btn-primary">Subscribe</button>
-                </form>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <p class="mb-0">Designed by <a href="#">Life Path Team</a></p>
-            </div>
-        </div>
-    </div>
-</footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // تحميل الصورة الشخصية وتحديثها في كل مكان
-        document.getElementById('profilePhotoInput').addEventListener('change', function (event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    // تحديث الصورة في المودال
-                    document.getElementById('modalProfileImg').src = e.target.result;
-
-                    // تحديث الصورة في شريط التنقل
-                    document.getElementById('navbarUserAvatar').src = e.target.result;
-
-                    // حفظ في localStorage
-                    localStorage.setItem('profilePhoto', e.target.result);
-
-                    // عرض إشعار
-                    showNotification('Profile photo updated successfully!');
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // تحميل الصورة المحفوظة عند فتح الصفحة
-        window.addEventListener('DOMContentLoaded', function () {
+        // بيانات الأطباء حسب الأقسام
+        const doctorsByDepartment = {
+            psychology: [
+                { id: 1, name: "Dr. Sarah Johnson", specialty: "Psychotherapy Specialist", image: "https://via.placeholder.com/80", availableSlots: ["09:00", "10:00", "11:00", "14:00", "15:00"] },
+                { id: 2, name: "Dr. Michael Brown", specialty: "Mental Health Consultant", image: "https://via.placeholder.com/80", availableSlots: ["10:00", "11:00", "12:00", "16:00", "17:00"] }
+            ],
+            autism: [
+                { id: 3, name: "Dr. Emily Wilson", specialty: "Autism Disorder Specialist", image: "https://via.placeholder.com/80", availableSlots: ["08:00", "09:00", "10:30", "14:00", "15:30"] },
+                { id: 4, name: "Dr. James Anderson", specialty: "Autism & Child Development", image: "https://via.placeholder.com/80", availableSlots: ["09:30", "11:00", "13:00", "14:30", "16:00"] }
+            ],
+            neurology: [
+                { id: 5, name: "Dr. Robert Taylor", specialty: "Neurology Consultant", image: "https://via.placeholder.com/80", availableSlots: ["08:30", "10:00", "11:30", "15:00", "16:30"] },
+                { id: 6, name: "Dr. Lisa Martinez", specialty: "Neurology Specialist", image: "https://via.placeholder.com/80", availableSlots: ["09:00", "10:30", "12:00", "14:00", "15:30"] }
+            ],
+            rehabilitation: [
+                { id: 7, name: "Dr. David Clark", specialty: "Medical Rehabilitation Specialist", image: "https://via.placeholder.com/80", availableSlots: ["08:00", "09:30", "11:00", "13:30", "15:00"] },
+                { id: 8, name: "Dr. Jennifer Lee", specialty: "Physical Therapy Consultant", image: "https://via.placeholder.com/80", availableSlots: ["09:00", "10:00", "11:00", "14:00", "16:00"] }
+            ]
+        };
+        
+        // بيانات الحجوزات (سيتم تخزينها محلياً)
+        let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+        
+        // متغيرات للحالة الحالية
+        let currentStep = 1;
+        let selectedDepartment = '';
+        let selectedDoctor = null;
+        let selectedDate = '';
+        let selectedTime = '';
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        let lastBookingId = parseInt(localStorage.getItem('lastBookingId')) || 0;
+        let selectedPaymentMethod = '';
+        let currentBooking = null;
+        
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCalendar(currentMonth, currentYear);
+            updateBookingsTable();
+            
+            // تحميل الصورة المحفوظة
             const savedPhoto = localStorage.getItem('profilePhoto');
             if (savedPhoto) {
                 document.getElementById('modalProfileImg').src = savedPhoto;
                 document.getElementById('navbarUserAvatar').src = savedPhoto;
             }
+            
+            // إعداد مستمع حدث لرفع الصورة
+            document.getElementById('profilePhotoInput').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // تحديث الصورة في المودال
+                        document.getElementById('modalProfileImg').src = e.target.result;
+                        
+                        // تحديث الصورة في شريط التنقل
+                        document.getElementById('navbarUserAvatar').src = e.target.result;
+                        
+                        // حفظ في localStorage
+                        localStorage.setItem('profilePhoto', e.target.result);
+                        
+                        // عرض إشعار
+                        showNotification('Profile photo updated successfully!');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // حفظ التغييرات في الملف الشخصي
+            document.getElementById('profileForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // محاكاة حفظ البيانات
+                setTimeout(function() {
+                    showNotification('Profile information saved successfully!');
+                    
+                    // تحديث الاسم في الصفحة الرئيسية
+                    const fullName = document.getElementById('fullName').value;
+                    document.querySelector('.hero h1').textContent = `Welcome, ${fullName.split(' ')[0]}!`;
+                    document.querySelector('.navbar span').textContent = `Hello, ${fullName.split(' ')[0]}`;
+                }, 500);
+            });
+            
+            // تأكيد الحجز والانتقال للدفع
+            document.getElementById('completePayment').addEventListener('click', function() {
+                if (!document.getElementById('paymentAgreement').checked) {
+                    alert('Please agree to authorize deduction from your bank card');
+                    return;
+                }
+                
+                if (!selectedPaymentMethod) {
+                    alert('Please select a payment method first');
+                    return;
+                }
+                
+                // إذا كان الدفع ببطاقة، تحقق من التفاصيل
+                if (selectedPaymentMethod === 'credit-card') {
+                    const cardNumber = document.getElementById('cardNumber').value;
+                    const expiryDate = document.getElementById('expiryDate').value;
+                    const cvv = document.getElementById('cvv').value;
+                    const cardHolder = document.getElementById('cardHolder').value;
+                    
+                    if (!cardNumber || !expiryDate || !cvv || !cardHolder) {
+                        alert('Please fill all card details');
+                        return;
+                    }
+                } else if (selectedPaymentMethod === 'mada') {
+                    const madaCardNumber = document.getElementById('madaCardNumber').value;
+                    if (!madaCardNumber) {
+                        alert('Please fill Mada card number');
+                        return;
+                    }
+                }
+                
+                // تحديث حالة الدفع
+                currentBooking.paymentStatus = 'paid';
+                currentBooking.paymentMethod = selectedPaymentMethod;
+                currentBooking.paymentDate = new Date();
+                currentBooking.status = 'confirmed';
+                
+                // إضافة الحجز إلى القائمة
+                bookings.push(currentBooking);
+                
+                // حفظ في localStorage
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+                localStorage.setItem('lastBookingId', lastBookingId);
+                
+                // تحديث الجدول
+                updateBookingsTable();
+                
+                // إرسال رسالة تأكيد
+                sendConfirmationSMS();
+                
+                // الانتقال إلى صفحة النجاح
+                showSuccessPage();
+            });
         });
-
-        // حفظ التغييرات في الملف الشخصي
-        document.getElementById('profileForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            // محاكاة حفظ البيانات
-            setTimeout(function () {
-                showNotification('Profile information saved successfully!');
-
-                // تحديث الاسم في الصفحة الرئيسية إذا تم تغييره
-                const fullName = document.getElementById('fullName').value;
-                document.querySelector('.hero h1').textContent = `Welcome, ${fullName.split(' ')[0]}!`;
-                document.querySelector('.navbar span').textContent = `Hello, ${fullName.split(' ')[0]}`;
-            }, 500);
-        });
-
+        
+        // توليد رقم حجز فريد
+        function generateBookingId() {
+            lastBookingId++;
+            
+            const now = new Date();
+            const year = now.getFullYear().toString().substr(-2);
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            
+            let departmentPrefix = 'GN';
+            
+            if (selectedDepartment === 'psychology') departmentPrefix = 'PSY';
+            else if (selectedDepartment === 'autism') departmentPrefix = 'AUT';
+            else if (selectedDepartment === 'neurology') departmentPrefix = 'NEU';
+            else if (selectedDepartment === 'rehabilitation') departmentPrefix = 'REH';
+            
+            return `${departmentPrefix}${year}${month}${day}${lastBookingId.toString().padStart(4, '0')}`;
+        }
+        
+        // تحميل الأطباء حسب القسم
+        function loadDoctors() {
+            const department = document.getElementById('department').value;
+            selectedDepartment = department;
+            const doctorsContainer = document.getElementById('doctorsContainer');
+            
+            if (!department) {
+                doctorsContainer.innerHTML = '<p class="text-center text-muted py-4">Please select a department to view available doctors</p>';
+                return;
+            }
+            
+            const doctors = doctorsByDepartment[department];
+            let html = '<div class="row">';
+            
+            doctors.forEach(doctor => {
+                html += `
+                    <div class="col-md-6 mb-3">
+                        <div class="doctor-card" data-id="${doctor.id}">
+                            <div class="d-flex align-items-center">
+                                <img src="${doctor.image}" alt="${doctor.name}" class="rounded-circle me-3" width="60" height="60">
+                                <div>
+                                    <h6 class="mb-1">${doctor.name}</h6>
+                                    <p class="mb-0 text-muted small">${doctor.specialty}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            doctorsContainer.innerHTML = html;
+            
+            // إضافة مستمعي الأحداث لبطاقات الأطباء
+            document.querySelectorAll('.doctor-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('.doctor-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    const doctorId = parseInt(this.getAttribute('data-id'));
+                    selectedDoctor = doctorsByDepartment[department].find(d => d.id === doctorId);
+                });
+            });
+        }
+        
+        // توليد التقويم
+        function generateCalendar(month, year) {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                               "July", "August", "September", "October", "November", "December"];
+            
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+            
+            // أول يوم من الشهر
+            const firstDay = new Date(year, month, 1).getDay();
+            // عدد أيام الشهر
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // تهيئة التقويم
+            calendarGrid.innerHTML = '';
+            
+            // إضافة أيام الأسبوع
+            const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            daysOfWeek.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day fw-bold';
+                dayElement.textContent = day;
+                calendarGrid.appendChild(dayElement);
+            });
+            
+            // الفراغات قبل أول يوم
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day disabled';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            // أيام الشهر
+            const today = new Date();
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                
+                // تحديد إذا كان اليوم الحالي
+                if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                    dayElement.classList.add('today');
+                }
+                
+                // تحديد إذا كان التاريخ في الماضي
+                const currentDate = new Date(year, month, i);
+                if (currentDate < today.setHours(0, 0, 0, 0)) {
+                    dayElement.classList.add('disabled');
+                } else {
+                    dayElement.addEventListener('click', function() {
+                        selectDate(currentDate);
+                    });
+                }
+                
+                dayElement.textContent = i;
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+        
+        // تغيير الشهر
+        function changeMonth(direction) {
+            currentMonth += direction;
+            
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            
+            generateCalendar(currentMonth, currentYear);
+        }
+        
+        // اختيار تاريخ
+        function selectDate(date) {
+            selectedDate = date.toISOString().split('T')[0];
+            
+            // تحديث المظهر
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                day.classList.remove('selected');
+            });
+            
+            event.target.classList.add('selected');
+            
+            // عرض المواعيد المتاحة
+            showAvailableTimeSlots();
+        }
+        
+        // عرض المواعيد المتاحة
+        function showAvailableTimeSlots() {
+            if (!selectedDoctor) {
+                alert('Please select a doctor first');
+                return;
+            }
+            
+            const timeSlotsContainer = document.getElementById('timeSlots');
+            let html = '';
+            
+            selectedDoctor.availableSlots.forEach(slot => {
+                // التحقق إذا كان الموعد محجوزاً مسبقاً
+                const isBooked = bookings.some(booking => 
+                    booking.doctor === selectedDoctor.name && 
+                    booking.date === selectedDate && 
+                    booking.time === slot
+                );
+                
+                html += `
+                    <div class="time-slot ${isBooked ? 'unavailable' : ''}" data-time="${slot}">
+                        ${slot}
+                    </div>
+                `;
+            });
+            
+            timeSlotsContainer.innerHTML = html;
+            
+            // إضافة مستمعي الأحداث للمواعيد المتاحة
+            document.querySelectorAll('.time-slot:not(.unavailable)').forEach(slot => {
+                slot.addEventListener('click', function() {
+                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedTime = this.getAttribute('data-time');
+                });
+            });
+        }
+        
+        // الخطوة التالية
+        function nextStep(step) {
+            // التحقق من صحة البيانات قبل الانتقال
+            if (step === 1 && !validateStep1()) {
+                alert('Please fill all required fields in personal information');
+                return;
+            }
+            
+            if (step === 2 && !validateStep2()) {
+                alert('Please select a department and doctor');
+                return;
+            }
+            
+            if (step === 3 && !validateStep3()) {
+                alert('Please select date and time');
+                return;
+            }
+            
+            if (step === 4 && !validateStep4()) {
+                alert('Please agree to the terms and conditions');
+                return;
+            }
+            
+            // تحديث مؤشر التقدم
+            document.getElementById(`step${step}Indicator`).classList.remove('active');
+            document.getElementById(`step${step}Indicator`).classList.add('completed');
+            document.getElementById(`step${step + 1}Indicator`).classList.add('active');
+            
+            // إخفاء الخطوة الحالية وإظهار التالية
+            document.getElementById(`step${step}`).classList.remove('active');
+            document.getElementById(`step${step + 1}`).classList.add('active');
+            
+            currentStep = step + 1;
+            
+            // إذا كانت الخطوة 4 (التأكيد)، تعبئة بيانات التأكيد
+            if (step === 3) {
+                fillConfirmationData();
+            }
+            
+            // إذا كانت الخطوة 4 (الانتقال إلى الدفع)، إنشاء الحجز
+            if (step === 4) {
+                // إنشاء الحجز
+                const bookingId = generateBookingId();
+                currentBooking = {
+                    id: bookingId,
+                    name: document.getElementById('bookingFullName').value,
+                    email: document.getElementById('bookingEmail').value,
+                    phone: document.getElementById('bookingPhone').value,
+                    nationalId: document.getElementById('bookingNationalID').value,
+                    department: document.getElementById('department').value,
+                    doctor: selectedDoctor.name,
+                    date: selectedDate,
+                    time: selectedTime,
+                    status: 'pending',
+                    paymentStatus: 'unpaid',
+                    timestamp: new Date()
+                };
+                
+                // تعبئة بيانات الدفع
+                document.getElementById('paymentBookingId').textContent = currentBooking.id;
+                document.getElementById('paymentName').textContent = currentBooking.name;
+                document.getElementById('paymentDoctor').textContent = currentBooking.doctor;
+                
+                const dateObj = new Date(currentBooking.date);
+                const formattedDate = dateObj.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                document.getElementById('paymentDateTime').textContent = `${formattedDate} - ${currentBooking.time}`;
+            }
+        }
+        
+        // الخطوة السابقة
+        function prevStep(step) {
+            // تحديث مؤشر التقدم
+            document.getElementById(`step${step}Indicator`).classList.remove('active');
+            document.getElementById(`step${step - 1}Indicator`).classList.add('active');
+            document.getElementById(`step${step - 1}Indicator`).classList.remove('completed');
+            
+            // إخفاء الخطوة الحالية وإظهار السابقة
+            document.getElementById(`step${step}`).classList.remove('active');
+            document.getElementById(`step${step - 1}`).classList.add('active');
+            
+            currentStep = step - 1;
+        }
+        
+        // التحقق من صحة الخطوة 1
+        function validateStep1() {
+            const fullName = document.getElementById('bookingFullName').value;
+            const email = document.getElementById('bookingEmail').value;
+            const phone = document.getElementById('bookingPhone').value;
+            const nationalId = document.getElementById('bookingNationalID').value;
+            const age = document.getElementById('bookingAge').value;
+            
+            return fullName && email && phone && nationalId && age;
+        }
+        
+        // التحقق من صحة الخطوة 2
+        function validateStep2() {
+            return selectedDepartment && selectedDoctor;
+        }
+        
+        // التحقق من صحة الخطوة 3
+        function validateStep3() {
+            return selectedDate && selectedTime;
+        }
+        
+        // التحقق من صحة الخطوة 4
+        function validateStep4() {
+            return document.getElementById('termsAgreement').checked;
+        }
+        
+        // تعبئة بيانات التأكيد
+        function fillConfirmationData() {
+            document.getElementById('confirmName').textContent = document.getElementById('bookingFullName').value;
+            document.getElementById('confirmEmail').textContent = document.getElementById('bookingEmail').value;
+            document.getElementById('confirmPhone').textContent = document.getElementById('bookingPhone').value;
+            document.getElementById('confirmNationalID').textContent = document.getElementById('bookingNationalID').value;
+            
+            const departmentSelect = document.getElementById('department');
+            const departmentText = departmentSelect.options[departmentSelect.selectedIndex].text;
+            document.getElementById('confirmDepartment').textContent = departmentText;
+            
+            document.getElementById('confirmDoctor').textContent = selectedDoctor.name;
+            
+            const dateObj = new Date(selectedDate);
+            const formattedDate = dateObj.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            document.getElementById('confirmDateTime').textContent = `${formattedDate} - ${selectedTime}`;
+            
+            // عرض رقم الحجز المولد
+            document.getElementById('confirmBookingId').textContent = generateBookingId();
+        }
+        
+        // اختيار طريقة الدفع
+        function selectPayment(method) {
+            selectedPaymentMethod = method;
+            
+            // إلغاء تحديد جميع الخيارات
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // تحديد الخيار المحدد
+            event.currentTarget.classList.add('selected');
+            
+            // إخفاء جميع تفاصيل الدفع
+            document.querySelectorAll('.payment-details').forEach(detail => {
+                detail.style.display = 'none';
+            });
+            
+            // إظهار تفاصيل طريقة الدفع المحددة
+            if (method === 'credit-card') {
+                document.getElementById('creditCardDetails').style.display = 'block';
+            } else if (method === 'mada') {
+                document.getElementById('madaDetails').style.display = 'block';
+            }
+        }
+        
+        // عرض صفحة النجاح
+        function showSuccessPage() {
+            document.getElementById('bookingPage').style.display = 'none';
+            document.getElementById('successPage').style.display = 'block';
+            
+            // تعبئة بيانات النجاح
+            document.getElementById('successBookingId').textContent = currentBooking.id;
+            document.getElementById('successName').textContent = currentBooking.name;
+            document.getElementById('successDoctor').textContent = currentBooking.doctor;
+            
+            const dateObj = new Date(currentBooking.date);
+            const formattedDate = dateObj.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            document.getElementById('successDateTime').textContent = `${formattedDate} - ${currentBooking.time}`;
+        }
+        
+        // إرسال رسالة تأكيد
+        function sendConfirmationSMS() {
+            // محاكاة إرسال رسالة SMS
+            const phone = document.getElementById('bookingPhone').value;
+            const message = `Your appointment with ${currentBooking.doctor} on ${currentBooking.date} at ${currentBooking.time} has been confirmed. Booking ID: ${currentBooking.id}`;
+            
+            console.log(`Sending SMS to ${phone}: ${message}`);
+            showNotification('Confirmation message has been sent to your phone');
+        }
+        
+        // طباعة تفاصيل الحجز
+        function printBooking() {
+            window.print();
+        }
+        
+        // حجز جديد
+        function newBooking() {
+            resetForm();
+            document.getElementById('successPage').style.display = 'none';
+            document.getElementById('bookingPage').style.display = 'block';
+        }
+        
+        // تحديث جدول الحجوزات
+        function updateBookingsTable() {
+            const tableBody = document.getElementById('bookingsTableBody');
+            let html = '';
+            
+            if (bookings.length === 0) {
+                html = '<tr><td colspan="6" class="text-center py-4">No previous bookings</td></tr>';
+            } else {
+                bookings.forEach(booking => {
+                    let statusClass = '';
+                    let statusText = '';
+                    
+                    if (booking.status === 'pending') {
+                        statusClass = 'status-pending';
+                        statusText = 'Pending';
+                    } else if (booking.status === 'confirmed') {
+                        statusClass = 'status-confirmed';
+                        statusText = 'Confirmed';
+                    } else if (booking.status === 'completed') {
+                        statusClass = 'status-completed';
+                        statusText = 'Completed';
+                    }
+                    
+                    html += `
+                        <tr>
+                            <td>${booking.id}</td>
+                            <td>${booking.doctor}</td>
+                            <td>${booking.date}</td>
+                            <td>${booking.time}</td>
+                            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary">Details</button>
+                                <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+            
+            tableBody.innerHTML = html;
+        }
+        
+        // إعادة تعيين النموذج
+        function resetForm() {
+            document.getElementById('bookingFullName').value = '';
+            document.getElementById('bookingEmail').value = '';
+            document.getElementById('bookingPhone').value = '';
+            document.getElementById('bookingNationalID').value = '';
+            document.getElementById('bookingAge').value = '';
+            document.getElementById('bookingNotes').value = '';
+            document.getElementById('department').value = '';
+            document.getElementById('termsAgreement').checked = false;
+            document.getElementById('paymentAgreement').checked = false;
+            
+            selectedDepartment = '';
+            selectedDoctor = null;
+            selectedDate = '';
+            selectedTime = '';
+            selectedPaymentMethod = '';
+            
+            // إخفاء تفاصيل الدفع
+            document.querySelectorAll('.payment-details').forEach(detail => {
+                detail.style.display = 'none';
+            });
+            
+            // إلغاء تحديد خيارات الدفع
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // إعادة إلى الخطوة الأولى
+            document.querySelectorAll('.booking-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('step1').classList.add('active');
+            
+            document.querySelectorAll('.progress-step').forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            document.getElementById('step1Indicator').classList.add('active');
+            
+            currentStep = 1;
+            
+            // تحديث واجهة الأطباء والمواعيد
+            loadDoctors();
+            generateCalendar(currentMonth, currentYear);
+        }
+        
         // دالة عرض الإشعارات
         function showNotification(message, type = 'success') {
             // إنشاء عنصر toast ديناميكيًا
             const toastContainer = document.createElement('div');
             toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
-
+            
             const toastEl = document.createElement('div');
             toastEl.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0`;
             toastEl.setAttribute('role', 'alert');
             toastEl.setAttribute('aria-live', 'assertive');
             toastEl.setAttribute('aria-atomic', 'true');
-
+            
             toastEl.innerHTML = `
                 <div class="d-flex">
                     <div class="toast-body">
@@ -1258,213 +1858,18 @@ body {
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             `;
-
+            
             toastContainer.appendChild(toastEl);
             document.body.appendChild(toastContainer);
-
+            
             const toast = new bootstrap.Toast(toastEl);
             toast.show();
-
+            
             // إزالة العنصر بعد الاختفاء
-            toastEl.addEventListener('hidden.bs.toast', function () {
+            toastEl.addEventListener('hidden.bs.toast', function() {
                 toastContainer.remove();
             });
         }
-
-        // إضافة بعض المواعيد الافتراضية لواجهة المستخدم
-        document.addEventListener('DOMContentLoaded', function () {
-            const appointments = [
-                { date: '2025-09-15', time: '10:00 AM', doctor: 'Dr. Sarah Johnson', type: 'Online' },
-                { date: '2025-09-22', time: '2:30 PM', doctor: 'Dr. Ahmed Ali', type: 'In-Clinic' }
-            ];
-
-            const appointmentsList = document.getElementById('appointmentsList');
-
-            if (appointments.length > 0) {
-                appointmentsList.innerHTML = '';
-
-                appointments.forEach(appointment => {
-                    const li = document.createElement('li');
-                    li.className = 'list-group-item';
-                    li.innerHTML = `
-                        <strong>${appointment.date} ${appointment.time}</strong><br>
-                        <small>${appointment.doctor} | ${appointment.type}</small>
-                    `;
-                    appointmentsList.appendChild(li);
-                });
-            }
-        });
-
-        // وظائف الحجز
-        let currentStep = 1;
-        let selectedPayment = '';
-
-        function nextStep(step) {
-            // التحقق من صحة البيانات قبل الانتقال
-            if (step === 1) {
-                const name = document.getElementById('bookingFullName').value;
-                const email = document.getElementById('bookingEmail').value;
-                const phone = document.getElementById('bookingPhone').value;
-                const age = document.getElementById('bookingAge').value;
-
-                if (!name || !email || !phone || !age) {
-                    showNotification('Please fill all required fields', 'error');
-                    return;
-                }
-            } else if (step === 2) {
-                const type = document.getElementById('appointmentType').value;
-                const doctor = document.getElementById('doctor').value;
-                const date = document.getElementById('appointmentDate').value;
-                const time = document.getElementById('appointmentTime').value;
-
-                if (!type || !doctor || !date || !time) {
-                    showNotification('Please fill all appointment details', 'error');
-                    return;
-                }
-            } else if (step === 3) {
-                if (!selectedPayment) {
-                    showNotification('Please select a payment method', 'error');
-                    return;
-                }
-
-                // إذا كان الدفع ببطاقة، تحقق من التفاصيل
-                if (selectedPayment === 'card') {
-                    const cardNumber = document.getElementById('cardNumber').value;
-                    const expiryDate = document.getElementById('expiryDate').value;
-                    const cvv = document.getElementById('cvv').value;
-                    const cardHolder = document.getElementById('cardHolder').value;
-
-                    if (!cardNumber || !expiryDate || !cvv || !cardHolder) {
-                        showNotification('Please fill all card details', 'error');
-                        return;
-                    }
-                }
-
-                // ملء تفاصيل التأكيد
-                document.getElementById('confirmName').textContent = document.getElementById('bookingFullName').value;
-                document.getElementById('confirmEmail').textContent = document.getElementById('bookingEmail').value;
-                document.getElementById('confirmPhone').textContent = document.getElementById('bookingPhone').value;
-                document.getElementById('confirmDoctor').textContent = document.getElementById('doctor').value;
-                document.getElementById('confirmType').textContent = document.getElementById('appointmentType').value;
-                document.getElementById('confirmDateTime').textContent = document.getElementById('appointmentDate').value + ' ' + document.getElementById('appointmentTime').value;
-                document.getElementById('confirmPayment').textContent = selectedPayment === 'card' ? 'Credit/Debit Card' :
-                    selectedPayment === 'paypal' ? 'PayPal' : 'Cash (at clinic)';
-            }
-
-            // الانتقال للخطوة التالية
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            document.getElementById(`step${currentStep}Indicator`).classList.remove('active');
-
-            currentStep++;
-
-            document.getElementById(`step${currentStep}`).classList.add('active');
-            document.getElementById(`step${currentStep}Indicator`).classList.add('active');
-
-            // تحديث مؤشر التقدم
-            for (let i = 1; i < currentStep; i++) {
-                document.getElementById(`step${i}Indicator`).classList.add('completed');
-            }
-        }
-
-        function prevStep(step) {
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            document.getElementById(`step${currentStep}Indicator`).classList.remove('active');
-
-            currentStep--;
-
-            document.getElementById(`step${currentStep}`).classList.add('active');
-            document.getElementById(`step${currentStep}Indicator`).classList.add('active');
-        }
-
-        function selectPayment(method) {
-            selectedPayment = method;
-
-            // إزالة التحديد من جميع الخيارات
-            document.querySelectorAll('.payment-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-
-            // إضافة التحديد للخيار المحدد
-            event.currentTarget.classList.add('selected');
-
-            // إظهار/إخفاء تفاصيل البطاقة
-            if (method === 'card') {
-                document.getElementById('cardDetails').style.display = 'block';
-            } else {
-                document.getElementById('cardDetails').style.display = 'none';
-            }
-        }
-
-        // تأكيد الحجز
-        document.getElementById('confirmBooking').addEventListener('click', function () {
-            if (!document.getElementById('termsAgreement').checked) {
-                showNotification('Please agree to the terms and conditions', 'error');
-                return;
-            }
-
-            // محاكاة عملية الحجز
-            showNotification('Appointment booked successfully!');
-
-            // إغلاق المودال بعد تأكيد الحجز
-            setTimeout(() => {
-                const modal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
-                modal.hide();
-
-                // إعادة تعيين النموذج
-                document.getElementById('bookingFullName').value = '';
-                document.getElementById('bookingEmail').value = '';
-                document.getElementById('bookingPhone').value = '';
-                document.getElementById('bookingAge').value = '';
-                document.getElementById('bookingNotes').value = '';
-                document.getElementById('appointmentType').value = '';
-                document.getElementById('doctor').value = '';
-                document.getElementById('appointmentDate').value = '';
-                document.getElementById('appointmentTime').value = '';
-                document.getElementById('termsAgreement').checked = false;
-
-                // إعادة تعيين مؤشر التقدم
-                currentStep = 1;
-                document.querySelectorAll('.booking-step').forEach(step => {
-                    step.classList.remove('active');
-                });
-                document.getElementById('step1').classList.add('active');
-
-                document.querySelectorAll('.progress-step').forEach(step => {
-                    step.classList.remove('active', 'completed');
-                });
-                document.getElementById('step1Indicator').classList.add('active');
-            }, 1500);
-        });
-        // Toggle widget open/close
-function toggleAppointmentsWidget() {
-    const widget = document.getElementById('appointmentsWidget');
-    widget.classList.toggle('collapsed');
-
-    // Change the chevron icon dynamically
-    const icon = widget.querySelector('.toggle-widget i');
-    if (widget.classList.contains('collapsed')) {
-        icon.classList.remove('fa-chevron-right');
-        icon.classList.add('fa-chevron-left');
-    } else {
-        icon.classList.remove('fa-chevron-left');
-        icon.classList.add('fa-chevron-right');
-    }
-}
-
-// Optional: auto-collapse after a few seconds of inactivity
-let collapseTimeout;
-document.getElementById('appointmentsWidget').addEventListener('mouseenter', () => {
-    clearTimeout(collapseTimeout);
-});
-document.getElementById('appointmentsWidget').addEventListener('mouseleave', () => {
-    collapseTimeout = setTimeout(() => {
-        const widget = document.getElementById('appointmentsWidget');
-        if(!widget.classList.contains('collapsed')) {
-            toggleAppointmentsWidget();
-        }
-    }, 7000); // auto-collapse after 7 seconds
-});
-
     </script>
 </body>
 

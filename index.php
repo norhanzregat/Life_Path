@@ -77,7 +77,7 @@
       <h1>ابدأ رحلة التعافي مع Life Path</h1>
       <p>نحن هنا لنساعدك في رحلتك نحو الصحة النفسية والتوازن الداخلي، مع فريق من الأخصائيين النفسيين ذوي الخبرة
         والكفاءة.</p>
-      <a href="main_page_patients/main.php" class="btn btn-primary btn-lg">احجز موعدك الآن</a>
+      <a href="booking_appo/booking.php" class="btn btn-primary btn-lg">احجز موعدك الآن</a>
 
     </div>
   </section>
