@@ -10,6 +10,48 @@
   <link rel="stylesheet" href="specialists.css">
 </head>
 <body>
+  <style>
+/* الهيدر */
+.header {
+  background: linear-gradient(90deg, #007bff, #00bfff); /* Gradient أزرق جميل */
+  color: white; /* نص واضح */
+  padding: 60px 20px;
+  text-align: center;
+  border-radius: 0 0 20px 20px;
+}
+
+/* أيقونات الهيدر */
+.header-icon {
+  color: white;
+  transition: color 0.3s;
+}
+.header-icon:hover {
+  color: #ffd700; /* تغيير لون عند المرور لتوضيح */
+}
+
+/* زر */
+.btn-primary {
+  background: linear-gradient(90deg, #00bfff, #0655A9FF);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* تأثير hover للزر */
+.btn-primary:hover {
+  filter: brightness(1.2); /* يزيد الإضاءة */
+  transform: scale(1.09);  /* تكبير بسيط */
+}
+
+
+
+
+  </style>
 
 <!-- زر تغيير اللغة -->
 <div class="language-switcher">
@@ -21,6 +63,8 @@
   <div class="container text-center">
     <h1 id="heroTitle">أطباؤنا المتميزون</h1>
     <p id="heroDesc" class="lead">تعرف على نخبة من أفضل الأطباء المتخصصين في مختلف المجالات الطبية الذين يقدمون رعاية صحية استثنائية</p>
+          <a href="booking_appo/booking.php" class="btn btn-primary btn-lg">احجز موعدك الآن</a>
+
   </div>
 </section>
 
@@ -373,7 +417,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-        <a href="../booking_appo/booking.php" class="btn btn-primary">حجز موعد</a>
       </div>
     </div>
   </div>

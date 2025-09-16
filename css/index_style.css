@@ -156,6 +156,7 @@
       margin: 0 auto;
       line-height: 1.6;
     }
+    
 
     /* الأزرار */
     .btn-primary {
@@ -167,6 +168,7 @@
       transition: var(--transition);
       font-size: 1rem;
     }
+    
 
     .btn-primary:hover {
       background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));

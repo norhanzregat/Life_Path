@@ -1,20 +1,21 @@
-
+  
+        // بيانات الأطباء حسب القسم
         const doctorsByDepartment = {
             psychology: [
-                { id: 1, name: "Dr. Sarah Johnson", specialty: "Psychotherapy Specialist", image: "https://via.placeholder.com/80", availableSlots: ["09:00", "10:00", "11:00", "14:00", "15:00"] },
-                { id: 2, name: "Dr. Michael Brown", specialty: "Mental Health Consultant", image: "https://via.placeholder.com/80", availableSlots: ["10:00", "11:00", "12:00", "16:00", "17:00"] }
+                { id: 1, name: "د. سارة يوسف", specialty: "أخصائية العلاج النفسي", image: "https://via.placeholder.com/80", availableSlots: ["09:00", "10:00", "11:00", "14:00", "15:00"] },
+                { id: 2, name: "د. أحمد علي", specialty: "استشاري الصحة النفسية", image: "https://via.placeholder.com/80", availableSlots: ["10:00", "11:00", "12:00", "16:00", "17:00"] }
             ],
             autism: [
-                { id: 3, name: "Dr. Emily Wilson", specialty: "Autism Disorder Specialist", image: "https://via.placeholder.com/80", availableSlots: ["08:00", "09:00", "10:30", "14:00", "15:30"] },
-                { id: 4, name: "Dr. James Anderson", specialty: "Autism & Child Development", image: "https://via.placeholder.com/80", availableSlots: ["09:30", "11:00", "13:00", "14:30", "16:00"] }
+                { id: 3, name: "د. ليلى حسن", specialty: "أخصائية اضطراب التوحد", image: "https://via.placeholder.com/80", availableSlots: ["08:00", "09:00", "10:30", "14:00", "15:30"] },
+                { id: 4, name: "د. محمد السعدي", specialty: "التوحد وتطور الطفل", image: "https://via.placeholder.com/80", availableSlots: ["09:30", "11:00", "13:00", "14:30", "16:00"] }
             ],
             neurology: [
-                { id: 5, name: "Dr. Robert Taylor", specialty: "Neurology Consultant", image: "https://via.placeholder.com/80", availableSlots: ["08:30", "10:00", "11:30", "15:00", "16:30"] },
-                { id: 6, name: "Dr. Lisa Martinez", specialty: "Neurology Specialist", image: "https://via.placeholder.com/80", availableSlots: ["09:00", "10:30", "12:00", "14:00", "15:30"] }
+                { id: 5, name: "د. خالد الرحمن", specialty: "استشاري علم الأعصاب", image: "https://via.placeholder.com/80", availableSlots: ["08:30", "10:00", "11:30", "15:00", "16:30"] },
+                { id: 6, name: "د. منى عبدالله", specialty: "أخصائية علم الأعصاب", image: "https://via.placeholder.com/80", availableSlots: ["09:00", "10:30", "12:00", "14:00", "15:30"] }
             ],
             rehabilitation: [
-                { id: 7, name: "Dr. David Clark", specialty: "Medical Rehabilitation Specialist", image: "https://via.placeholder.com/80", availableSlots: ["08:00", "09:30", "11:00", "13:30", "15:00"] },
-                { id: 8, name: "Dr. Jennifer Lee", specialty: "Physical Therapy Consultant", image: "https://via.placeholder.com/80", availableSlots: ["09:00", "10:00", "11:00", "14:00", "16:00"] }
+                { id: 7, name: "د. فهد الشمري", specialty: "أخصائي التأهيل الطبي", image: "https://via.placeholder.com/80", availableSlots: ["08:00", "09:30", "11:00", "13:30", "15:00"] },
+                { id: 8, name: "د. نورة القحطاني", specialty: "استشارية العلاج الطبيعي", image: "https://via.placeholder.com/80", availableSlots: ["09:00", "10:00", "11:00", "14:00", "16:00"] }
             ]
         };
         
@@ -61,7 +62,7 @@
                         localStorage.setItem('profilePhoto', e.target.result);
                         
                         // عرض إشعار
-                        showNotification('Profile photo updated successfully!');
+                        showNotification('تم تحديث صورة الملف الشخصي بنجاح!');
                     };
                     reader.readAsDataURL(file);
                 }
@@ -73,12 +74,12 @@
                 
                 // محاكاة حفظ البيانات
                 setTimeout(function() {
-                    showNotification('Profile information saved successfully!');
+                    showNotification('تم حفظ معلومات الملف الشخصي بنجاح!');
                     
                     // تحديث الاسم في الصفحة الرئيسية
                     const fullName = document.getElementById('fullName').value;
-                    document.querySelector('.hero h1').textContent = `Welcome, ${fullName.split(' ')[0]}!`;
-                    document.querySelector('.navbar span').textContent = `Hello, ${fullName.split(' ')[0]}`;
+                    document.querySelector('.hero h2').textContent = `مرحباً ${fullName.split(' ')[0]}!`;
+                    document.querySelector('.navbar span').textContent = `مرحباً، ${fullName.split(' ')[0]}`;
                 }, 500);
             });
             
@@ -86,13 +87,13 @@
             document.getElementById('completePayment').addEventListener('click', function() {
                 if (selectedPaymentMethod === 'credit-card' || selectedPaymentMethod === 'mada') {
                     if (!document.getElementById('paymentAgreement').checked) {
-                        alert('Please agree to authorize deduction from your bank card');
+                        alert('يرجى الموافقة على خصم المبلغ من بطاقتك البنكية');
                         return;
                     }
                 }
                 
                 if (!selectedPaymentMethod) {
-                    alert('Please select a payment method first');
+                    alert('يرجى اختيار طريقة الدفع أولاً');
                     return;
                 }
                 
@@ -104,19 +105,19 @@
                     const cardHolder = document.getElementById('cardHolder').value;
                     
                     if (!cardNumber || !expiryDate || !cvv || !cardHolder) {
-                        alert('Please fill all card details');
+                        alert('يرجى ملء جميع تفاصيل البطاقة');
                         return;
                     }
                 } else if (selectedPaymentMethod === 'mada') {
                     const madaCardNumber = document.getElementById('madaCardNumber').value;
                     if (!madaCardNumber) {
-                        alert('Please fill Mada card number');
+                        alert('يرجى إدخال رقم بطاقة مدى');
                         return;
                     }
                 } else if (selectedPaymentMethod === 'orange') {
                     const orangeNumber = document.getElementById('orangeNumber').value;
                     if (!orangeNumber) {
-                        alert('Please fill Orange Money number');
+                        alert('يرجى إدخال رقم أورانج ماني');
                         return;
                     }
                 }
@@ -145,7 +146,6 @@
             });
         });
         
-        
         // توليد رقم حجز فريد
         function generateBookingId() {
             lastBookingId++;
@@ -172,7 +172,7 @@
             const doctorsContainer = document.getElementById('doctorsContainer');
             
             if (!department) {
-                doctorsContainer.innerHTML = '<p class="text-center text-muted py-4">Please select a department to view available doctors</p>';
+                doctorsContainer.innerHTML = '<p class="text-center text-muted py-4">الرجاء اختيار القسم لعرض الأطباء المتاحين</p>';
                 return;
             }
             
@@ -213,8 +213,8 @@
         // توليد التقويم
         function generateCalendar(month, year) {
             const calendarGrid = document.getElementById('calendarGrid');
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                               "July", "August", "September", "October", "November", "December"];
+            const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+                               "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
             
             document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
             
@@ -227,7 +227,7 @@
             calendarGrid.innerHTML = '';
             
             // إضافة أيام الأسبوع
-            const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const daysOfWeek = ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'];
             daysOfWeek.forEach(day => {
                 const dayElement = document.createElement('div');
                 dayElement.className = 'calendar-day fw-bold';
@@ -301,7 +301,7 @@
         // عرض المواعيد المتاحة
         function showAvailableTimeSlots() {
             if (!selectedDoctor) {
-                alert('Please select a doctor first');
+                alert('يرجى اختيار الطبيب أولاً');
                 return;
             }
             
@@ -339,22 +339,22 @@
         function nextStep(step) {
             // التحقق من صحة البيانات قبل الانتقال
             if (step === 1 && !validateStep1()) {
-                alert('Please fill all required fields in personal information');
+                alert('يرجى ملء جميع الحقول المطلوبة في المعلومات الشخصية');
                 return;
             }
             
             if (step === 2 && !validateStep2()) {
-                alert('Please select a department and doctor');
+                alert('يرجى اختيار القسم والطبيب');
                 return;
             }
             
             if (step === 3 && !validateStep3()) {
-                alert('Please select date and time');
+                alert('يرجى اختيار التاريخ والوقت');
                 return;
             }
             
             if (step === 4 && !validateStep4()) {
-                alert('Please agree to the terms and conditions');
+                alert('يرجى الموافقة على الشروط والأحكام');
                 return;
             }
             
@@ -399,7 +399,7 @@
                 document.getElementById('paymentDoctor').textContent = currentBooking.doctor;
                 
                 const dateObj = new Date(currentBooking.date);
-                const formattedDate = dateObj.toLocaleDateString('en-US', {
+                const formattedDate = dateObj.toLocaleDateString('ar-SA', {
                     weekday: 'long',
                     year: 'numeric',
                     month: 'long',
@@ -464,7 +464,7 @@
             document.getElementById('confirmDoctor').textContent = selectedDoctor.name;
             
             const dateObj = new Date(selectedDate);
-            const formattedDate = dateObj.toLocaleDateString('en-US', {
+            const formattedDate = dateObj.toLocaleDateString('ar-SA', {
                 weekday: 'long',
                 year: 'numeric',
                 month: 'long',
@@ -519,7 +519,7 @@
             document.getElementById('successDoctor').textContent = currentBooking.doctor;
             
             const dateObj = new Date(currentBooking.date);
-            const formattedDate = dateObj.toLocaleDateString('en-US', {
+            const formattedDate = dateObj.toLocaleDateString('ar-SA', {
                 weekday: 'long',
                 year: 'numeric',
                 month: 'long',
@@ -533,10 +533,10 @@
         function sendConfirmationSMS() {
             // محاكاة إرسال رسالة SMS
             const phone = document.getElementById('bookingPhone').value;
-            const message = `Your appointment with ${currentBooking.doctor} on ${currentBooking.date} at ${currentBooking.time} has been confirmed. Booking ID: ${currentBooking.id}`;
+            const message = `تم تأكيد موعدك مع ${currentBooking.doctor} في ${currentBooking.date} الساعة ${currentBooking.time}. رقم الحجز: ${currentBooking.id}`;
             
             console.log(`Sending SMS to ${phone}: ${message}`);
-            showNotification('Confirmation message has been sent to your phone');
+            showNotification('تم إرسال رسالة التأكيد إلى هاتفك');
         }
         
         // طباعة تفاصيل الحجز
@@ -557,7 +557,7 @@
             let html = '';
             
             if (bookings.length === 0) {
-                html = '<tr><td colspan="6" class="text-center py-4">No previous bookings</td></tr>';
+                html = '<tr><td colspan="6" class="text-center py-4">لا توجد حجوزات سابقة</td></tr>';
             } else {
                 bookings.forEach(booking => {
                     let statusClass = '';
@@ -565,13 +565,13 @@
                     
                     if (booking.status === 'pending') {
                         statusClass = 'status-pending';
-                        statusText = 'Pending';
+                        statusText = 'قيد الانتظار';
                     } else if (booking.status === 'confirmed') {
                         statusClass = 'status-confirmed';
-                        statusText = 'Confirmed';
+                        statusText = 'مؤكد';
                     } else if (booking.status === 'completed') {
                         statusClass = 'status-completed';
-                        statusText = 'Completed';
+                        statusText = 'مكتمل';
                     }
                     
                     html += `
@@ -582,8 +582,8 @@
                             <td>${booking.time}</td>
                             <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                             <td>
-                                <button class="btn btn-sm btn-outline-primary" onclick="showBookingDetails('${booking.id}')">Details</button>
-                                <button class="btn btn-sm btn-outline-danger" onclick="cancelBooking('${booking.id}')">Cancel</button>
+                                <button class="btn btn-sm btn-outline-primary" onclick="showBookingDetails('${booking.id}')">تفاصيل</button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="cancelBooking('${booking.id}')">إلغاء</button>
                             </td>
                         </tr>
                     `;
@@ -597,26 +597,26 @@
         function showBookingDetails(bookingId) {
             const booking = bookings.find(b => b.id === bookingId);
             if (booking) {
-                alert(`Booking Details:\n
-ID: ${booking.id}
-Name: ${booking.name}
-Email: ${booking.email}
-Phone: ${booking.phone}
-Doctor: ${booking.doctor}
-Date: ${booking.date}
-Time: ${booking.time}
-Status: ${booking.status}
-Payment: ${booking.paymentStatus}`);
+                alert(`تفاصيل الحجز:\n
+رقم الحجز: ${booking.id}
+الاسم: ${booking.name}
+البريد الإلكتروني: ${booking.email}
+الهاتف: ${booking.phone}
+الطبيب: ${booking.doctor}
+التاريخ: ${booking.date}
+الوقت: ${booking.time}
+الحالة: ${booking.status}
+حالة الدفع: ${booking.paymentStatus}`);
             }
         }
         
         // إلغاء الحجز
         function cancelBooking(bookingId) {
-            if (confirm('Are you sure you want to cancel this booking?')) {
+            if (confirm('هل أنت متأكد من إلغاء هذا الحجز؟')) {
                 bookings = bookings.filter(b => b.id !== bookingId);
                 localStorage.setItem('bookings', JSON.stringify(bookings));
                 updateBookingsTable();
-                showNotification('Booking has been cancelled');
+                showNotification('تم إلغاء الحجز');
             }
         }
         
@@ -698,4 +698,66 @@ Payment: ${booking.paymentStatus}`);
                 toastContainer.remove();
             });
         }
+
+        // نظام الترجمة بين العربية والإنجليزية
+        function setLanguage(lang) {
+            const langText = document.getElementById('currentLanguage');
+            const langBtn = document.querySelector('.language-btn');
+
+            if (lang === 'ar') {
+                langText.textContent = 'العربية';
+                langBtn.innerHTML = '<i class="fas fa-language me-1"></i> العربية';
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = 'ar';
+                translateToArabic();
+            } else if (lang === 'en') {
+                langText.textContent = 'English';
+                langBtn.innerHTML = '<i class="fas fa-language me-1"></i> English';
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = 'en';
+                translateToEnglish();
+            }
+
+            // إغلاق القائمة المنسدلة
+            document.getElementById('languageDropdown').classList.remove('show');
+        }
+
+        // وظائف الترجمة (مثال مبسط)
+        function translateToArabic() {
+            document.querySelector('title').textContent = 'Life Path Clinic - نظام الحجوزات';
+            document.querySelector('.hero h2').textContent = 'مرحباً نورهان';
+            document.querySelector('.hero h3').textContent = 'ابدأ بحجز موعدك الآن';
+            document.querySelector('.hero p').textContent = 'صحتك النفسية هي أولويتنا. اختر القسم والطبيب وحدد موعداً يناسبك.';
+            // يمكن إضافة المزيد من الترجمة هنا لكل العناصر
+        }
+
+        function translateToEnglish() {
+            document.querySelector('title').textContent = 'Life Path Clinic - Booking System';
+            document.querySelector('.hero h2').textContent = 'Welcome Norhan';
+            document.querySelector('.hero h3').textContent = 'Start booking your appointment now';
+            document.querySelector('.hero p').textContent = 'Your mental health is our priority. Choose the department and doctor and schedule an appointment that suits you.';
+            // يمكن إضافة المزيد من الترجمة هنا لكل العناصر
+        }
+
+        // إعداد مستمعي الأحداث للترجمة
+        document.getElementById('languageButton').addEventListener('click', function() {
+            document.getElementById('languageDropdown').classList.toggle('show');
+        });
+
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                setLanguage(lang);
+            });
+        });
+
+        // إغلاق منتقي اللغة عند النقر خارجها
+        window.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('languageDropdown');
+            const selector = document.querySelector('.language-selector');
+
+            if (!selector.contains(e.target) && dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+            }
+        });
  
