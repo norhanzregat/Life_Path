@@ -2,16 +2,16 @@
         // بيانات الأطباء حسب القسم
         const doctorsByDepartment = {
             psychology: [
-                { id: 1, name: "د. سارة يوسف", specialty: "أخصائية العلاج النفسي", image: "https://via.placeholder.com/80", availableSlots: ["09:00", "10:00", "11:00", "14:00", "15:00"] },
-                { id: 2, name: "د. أحمد علي", specialty: "استشاري الصحة النفسية", image: "https://via.placeholder.com/80", availableSlots: ["10:00", "11:00", "12:00", "16:00", "17:00"] }
+                { id: 1, name: "د. سارة يوسف", specialty: "أخصائية العلاج النفسي", image: "assets/images/doc1.jpeg", availableSlots: ["09:00", "10:00", "11:00", "14:00", "15:00"] },
+                { id: 2, name: "د. أحمد علي", specialty: "استشاري الصحة النفسية", image: "assets/images/doc3.jpeg", availableSlots: ["10:00", "11:00", "12:00", "16:00", "17:00"] }
             ],
             autism: [
-                { id: 3, name: "د. ليلى حسن", specialty: "أخصائية اضطراب التوحد", image: "https://via.placeholder.com/80", availableSlots: ["08:00", "09:00", "10:30", "14:00", "15:30"] },
-                { id: 4, name: "د. محمد السعدي", specialty: "التوحد وتطور الطفل", image: "https://via.placeholder.com/80", availableSlots: ["09:30", "11:00", "13:00", "14:30", "16:00"] }
+                { id: 3, name: "د. ليلى حسن", specialty: "أخصائية اضطراب التوحد", image: "assets/images/doc3.jpeg", availableSlots: ["08:00", "09:00", "10:30", "14:00", "15:30"] },
+                { id: 4, name: "د. محمد السعدي", specialty: "التوحد وتطور الطفل", image: "assets/images/doc4.jpeg", availableSlots: ["09:30", "11:00", "13:00", "14:30", "16:00"] }
             ],
             neurology: [
-                { id: 5, name: "د. خالد الرحمن", specialty: "استشاري علم الأعصاب", image: "https://via.placeholder.com/80", availableSlots: ["08:30", "10:00", "11:30", "15:00", "16:30"] },
-                { id: 6, name: "د. منى عبدالله", specialty: "أخصائية علم الأعصاب", image: "https://via.placeholder.com/80", availableSlots: ["09:00", "10:30", "12:00", "14:00", "15:30"] }
+                { id: 5, name: "د. خالد الرحمن", specialty: "استشاري علم الأعصاب", image: "assets/images/doc3.jpeg", availableSlots: ["08:30", "10:00", "11:30", "15:00", "16:30"] },
+                { id: 6, name: "د. منى عبدالله", specialty: "أخصائية علم الأعصاب", image: "assets/images/doc4.jpeg", availableSlots: ["09:00", "10:30", "12:00", "14:00", "15:30"] }
             ],
             rehabilitation: [
                 { id: 7, name: "د. فهد الشمري", specialty: "أخصائي التأهيل الطبي", image: "https://via.placeholder.com/80", availableSlots: ["08:00", "09:30", "11:00", "13:30", "15:00"] },
@@ -594,26 +594,35 @@
         }
         
         // عرض تفاصيل الحجز
-        function showBookingDetails(bookingId) {
-            const booking = bookings.find(b => b.id === bookingId);
-            if (booking) {
-                alert(`تفاصيل الحجز:\n
-رقم الحجز: ${booking.id}
-الاسم: ${booking.name}
-البريد الإلكتروني: ${booking.email}
-الهاتف: ${booking.phone}
-الطبيب: ${booking.doctor}
-التاريخ: ${booking.date}
-الوقت: ${booking.time}
-الحالة: ${booking.status}
-حالة الدفع: ${booking.paymentStatus}`);
-            }
-        }
-        
-        // إلغاء الحجز
-        function cancelBooking(bookingId) {
-            if (confirm('هل أنت متأكد من إلغاء هذا الحجز؟')) {
-                bookings = bookings.filter(b => b.id !== bookingId);
+function showBookingDetails(bookingId) {
+    const booking = bookings.find(b => b.id === bookingId);
+    if (booking) {
+        Swal.fire({
+            title: 'تفاصيل الحجز',
+            html: `
+                <div style="text-align:right;direction:rtl;">
+                    <p><b>رقم الحجز:</b> ${booking.id}</p>
+                    <p><b>الاسم:</b> ${booking.name}</p>
+                    <p><b>البريد الإلكتروني:</b> ${booking.email}</p>
+                    <p><b>الهاتف:</b> ${booking.phone}</p>
+                    <p><b>الطبيب:</b> ${booking.doctor}</p>
+                    <p><b>التاريخ:</b> ${booking.date}</p>
+                    <p><b>الوقت:</b> ${booking.time}</p>
+                    <p><b>الحالة:</b> ${booking.status}</p>
+                    <p><b>حالة الدفع:</b> ${booking.paymentStatus}</p>
+                </div>
+            `,
+            icon: 'info',
+            confirmButtonText: 'إغلاق',
+            confirmButtonColor: '#3085d6'
+        });
+    }
+}
+
+// إلغاء الحجز
+function cancelBooking(bookingId) {
+    if (confirm('هل أنت متأكد من إلغاء هذا الحجز؟')) {
+        bookings = bookings.filter(b => b.id !== bookingId);
                 localStorage.setItem('bookings', JSON.stringify(bookings));
                 updateBookingsTable();
                 showNotification('تم إلغاء الحجز');

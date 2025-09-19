@@ -1,3 +1,12 @@
+<?php
+session_start();
+require_once 'connection.php'; // ملف الاتصال بقاعدة البيانات
+
+// التحقق من وجود مستخدم مسجل دخوله
+$isLoggedIn = isset($_SESSION['user_id']);
+$userName = $isLoggedIn ? $_SESSION['user_name'] : '';
+?>
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -5,6 +14,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-translate="site_title">Life Path - عيادة مسار الحياة النفسية</title>
+  <!-- CSS المكتبة -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
 
   <!-- SEO Meta Tags -->
   <meta name="description" data-translate="site_description"
@@ -46,6 +57,31 @@
       <p data-translate="loading">جاري التحميل...</p>
     </div>
   </div>
+  
+
+  <!-- عرض رسائل الخطأ والنجاح -->
+  <?php if (isset($_SESSION['errors'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show fixed-top m-4" role="alert" style="z-index: 9999;">
+      <ul class="mb-0">
+        <?php foreach ($_SESSION['errors'] as $error): ?>
+          <li><?php echo $error; ?></li>
+        <?php endforeach; ?>
+      </ul>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <?php unset($_SESSION['errors']); ?>
+  <?php endif; ?>
+
+  <?php if (isset($_SESSION['success'])): ?>
+    <div class="alert alert-success alert-dismissible fade show fixed-top m-4" role="alert" style="z-index: 9999;">
+      <?php echo $_SESSION['success']; ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <?php unset($_SESSION['success']); ?>
+  <?php endif; ?>
+
+  <!-- باقي محتوى الصفحة يتبع هنا -->
+  <!-- ... -->
 
   <!-- Navigation Bar -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNavbar">
@@ -120,25 +156,25 @@
         <div class="col-lg-6" data-aos="fade-right">
           <div class="hero-content">
             <h1 class="hero-title" data-translate="hero_title">
-              ابدأ رحلة التعافي مع <span class="text-gradient">Life Path</span>
+              ابدأ رحلة التعافي مع <span class="text-gradient" data-translate="brand_name">Life Path</span>
             </h1>
             <p class="hero-subtitle" data-translate="hero_subtitle">
               نحن هنا لنساعدك في رحلتك نحو الصحة النفسية والتوازن الداخلي، مع فريق من الأخصائيين النفسيين ذوي الخبرة
               والكفاءة.
             </p>
-<div class="hero-actions">
-  <!-- زر حجز الموعد -->
-  <a href="booking_appo/booking.php" class="btn btn-primary btn-lg">
-    <i class="bi bi-calendar-check"></i>
-    <span data-translate="book_appointment">احجز موعدك الآن</span>
-  </a>
+            <div class="hero-actions">
+              <!-- زر حجز الموعد -->
+              <a href="booking_appo/booking.php" class="btn btn-primary btn-lg">
+                <i class="bi bi-calendar-check"></i>
+                <span data-translate="book_appointment">احجز موعدك الآن</span>
+              </a>
 
-  <!-- زر اعرف المزيد -->
-  <button class="btn btn-outline-light btn-lg" onclick="scrollToSection('about')">
-    <i class="bi bi-info-circle"></i>
-    <span data-translate="learn_more">اعرف المزيد</span>
-  </button>
-</div>
+              <!-- زر اعرف المزيد -->
+              <button class="btn btn-outline-light btn-lg" onclick="scrollToSection('about')">
+                <i class="bi bi-info-circle"></i>
+                <span data-translate="learn_more">اعرف المزيد</span>
+              </button>
+            </div>
 
 
             <!-- Statistics -->
@@ -333,15 +369,16 @@
       </div>
 
       <div class="row g-4" id="teamContainer">
+
         <!-- Team members will be loaded dynamically -->
       </div>
 
-<div class="text-center mt-5" data-aos="fade-up">
-  <a href="doctors/specialists/specialists.php" class="btn btn-outline-primary btn-lg">
-    <i class="bi bi-plus-circle"></i>
-    <span data-translate="view_all_doctors">عرض جميع الأطباء</span>
-  </a>
-</div>
+      <div class="text-center mt-5" data-aos="fade-up">
+        <a href="doctors/specialists/specialists.php" class="btn btn-outline-primary btn-lg">
+          <i class="bi bi-plus-circle"></i>
+          <span data-translate="view_all_doctors">عرض جميع الأطباء</span>
+        </a>
+      </div>
 
     </div>
   </section>
@@ -362,7 +399,7 @@
       <div class="row g-5">
         <div class="col-lg-8" data-aos="fade-right">
           <div class="contact-form-wrapper">
-            <form id="contactForm" class="contact-form">
+            <form id="contactForm" class="contact-form" action="contact_handler.php" method="POST">
               <div class="row g-3">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -379,7 +416,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="contactPhone" data-translate="phone">رقم الهاتف</label>
-                    <input type="tel" id="contactPhone" name="phone" class="form-control">
+                    <input type="tel" id="contactPhone" name="phone" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -440,8 +477,7 @@
               </div>
               <div class="contact-details">
                 <h5 data-translate="email">البريد الإلكتروني</h5>
-                <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                    data-cfemail="670e090108270b0e01021706130f4a040b0e090e044904080a">[email&#160;protected]</a></p>
+                <p><a href="mailto:info@lifepath.com">info@lifepath.com</a></p>
               </div>
             </div>
 
@@ -482,6 +518,7 @@
   </section>
 
   <!-- Footer -->
+
   <footer class="footer">
     <div class="container">
       <div class="row g-4">
@@ -534,8 +571,7 @@
             </div>
             <div class="contact-item">
               <i class="bi bi-envelope"></i>
-              <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                  data-cfemail="f29b9c949db29e9b94978293869adf919e9b9c9b91dc919d9f">[email&#160;protected]</a></span>
+              <span><a href="mailto:info@lifepath.com">info@lifepath.com</a></span>
             </div>
           </div>
         </div>
@@ -565,20 +601,20 @@
   </footer>
 
   <!-- Authentication Modal -->
+
   <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header border-0">
           <div class="auth-tabs w-100">
-            <button class="auth-tab active" id="loginTab" data-translate="login">تسجيل الدخول</button>
-            <button class="auth-tab" id="registerTab" data-translate="register">إنشاء حساب</button>
+            <button type="button" class="auth-tab active" id="loginTab" data-translate="login">تسجيل الدخول</button>
+            <button type="button" class="auth-tab" id="registerTab" data-translate="register">إنشاء حساب</button>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-
         <div class="modal-body">
           <!-- Login Form -->
-          <form id="loginForm" class="auth-form">
+          <form id="loginForm" class="auth-form" action="auth/login_post.php" method="POST">
             <div class="row g-3">
               <div class="col-12">
                 <div class="form-group">
@@ -595,90 +631,145 @@
               <div class="col-12">
                 <div class="form-options">
                   <div class="form-check">
-                    <input type="checkbox" id="rememberMe" class="form-check-input">
+                    <input type="checkbox" id="rememberMe" class="form-check-input" name="remember">
                     <label for="rememberMe" class="form-check-label" data-translate="remember_me">تذكرني</label>
                   </div>
                   <a href="#" class="forgot-password" data-translate="forgot_password">نسيت كلمة المرور؟</a>
                 </div>
               </div>
               <div class="col-12">
-                <button type="submit" class="btn btn-primary w-100">
+                <button type="submit" name="login" class="btn btn-primary w-100">
                   <i class="bi bi-box-arrow-in-right"></i>
                   <span data-translate="login">تسجيل الدخول</span>
                 </button>
+
               </div>
             </div>
           </form>
 
-          <!-- Register Form -->
-          <form id="registerForm" class="auth-form" style="display: none;">
-            <div class="row g-3">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="registerName" data-translate="full_name">الاسم الكامل</label>
-                  <input type="text" id="registerName" name="name" class="form-control" required>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="registerEmail" data-translate="email">البريد الإلكتروني</label>
-                  <input type="email" id="registerEmail" name="email" class="form-control" required>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="registerPhone" data-translate="phone">رقم الهاتف</label>
-                  <input type="tel" id="registerPhone" name="phone" class="form-control" required>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="registerGender" data-translate="gender">الجنس</label>
-                  <select id="registerGender" name="gender" class="form-control" required>
-                    <option value="" data-translate="select_gender">اختر الجنس</option>
-                    <option value="male" data-translate="male">ذكر</option>
-                    <option value="female" data-translate="female">أنثى</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="registerDob" data-translate="date_of_birth">تاريخ الميلاد</label>
-                  <input type="date" id="registerDob" name="dob" class="form-control" required>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="registerPassword" data-translate="password">كلمة المرور</label>
-                  <input type="password" id="registerPassword" name="password" class="form-control" required>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-check">
-                  <input type="checkbox" id="agreeTerms" class="form-check-input" required>
-                  <label for="agreeTerms" class="form-check-label">
-                    <span data-translate="agree_terms">أوافق على</span>
-                    <a href="#" data-translate="terms_conditions">الشروط والأحكام</a>
-                    <span data-translate="and">و</span>
-                    <a href="#" data-translate="privacy_policy">سياسة الخصوصية</a>
-                  </label>
-                </div>
-              </div>
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary w-100">
-                  <i class="bi bi-person-plus"></i>
-                  <span data-translate="register">إنشاء حساب</span>
-                </button>
-              </div>
-            </div>
-          </form>
+<!-- Register Form -->
+<form id="registerForm" class="auth-form" style="display: none;" action="auth/register_post.php" method="POST">
+  <div class="row g-3">
+
+    <!-- الاسم الأول -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="registerFirstName" data-translate="first_name">الاسم الأول</label>
+        <input type="text" id="registerName" name="first_name" class="form-control" required>
+        <small id="error_first_name" class="text-danger"></small>
+      </div>
+    </div>
+
+    <!-- الاسم الأخير -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="registerLastName" data-translate="last_name">الاسم الأخير</label>
+        <input type="text" id="registerLastName" name="last_name" class="form-control" required>
+        <small id="error_last_name" class="text-danger"></small>
+      </div>
+    </div>
+
+    <!-- البريد الإلكتروني -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="registerEmail" data-translate="email">البريد الإلكتروني</label>
+        <input type="email" id="registerEmail" name="email" class="form-control" required>
+        <small id="error_email" class="text-danger"></small>
+      </div>
+    </div>
+
+    <!-- رقم الهاتف -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="registerPhone" data-translate="phone">رقم الهاتف</label>
+        <div class="input-group">
+          <select class="form-select" id="country_code" name="country_code" required style="max-width:110px;">
+            <option value="+962" selected>🇯🇴 +962</option>
+            <option value="+966">🇸🇦 +966</option>
+            <option value="+20">🇪🇬 +20</option>
+            <option value="+971">🇦🇪 +971</option>
+            <option value="+965">🇰🇼 +965</option>
+            <option value="+964">🇮🇶 +964</option>
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+44">🇬🇧 +44</option>
+          </select>
+          <input type="tel" id="registerPhone" name="phone" class="form-control" placeholder="7X XXX XXXX" pattern="[0-9]{7,12}" required>
+        </div>
+        <small id="error_phone" class="text-danger"></small>
+      </div>
+    </div>
+
+    <!-- الجنس -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="registerGender" data-translate="gender">الجنس</label>
+        <select id="registerGender" name="gender" class="form-control" required>
+          <option value="" data-translate="select_gender">اختر الجنس</option>
+          <option value="male" data-translate="male">ذكر</option>
+          <option value="female" data-translate="female">أنثى</option>
+        </select>
+        <small id="error_gender" class="text-danger"></small>
+      </div>
+    </div>
+
+    <!-- تاريخ الميلاد -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="registerDob" data-translate="date_of_birth">تاريخ الميلاد</label>
+        <input type="date" id="registerDob" name="dob" class="form-control" required min="1900-01-01" max="<?php echo date('Y-m-d'); ?>">
+        <small id="error_dob" class="text-danger"></small>
+      </div>
+    </div>
+
+    <!-- كلمة المرور -->
+   <div class="col-md-6">
+    <div class="form-group">
+        <label for="registerPassword" data-translate="password">كلمة المرور</label>
+        <input type="password" id="registerPassword" name="password" class="form-control" required minlength="8">
+        <small id="error_password" class="text-danger"></small>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="registerConfirmPassword" data-translate="confirm_password">تأكيد كلمة المرور</label>
+        <input type="password" id="registerConfirmPassword" name="confirm_password" class="form-control" required minlength="8">
+        <small id="error_confirm_password" class="text-danger"></small>
+    </div>
+</div>
+
+    <!-- الشروط والأحكام -->
+    <div class="col-12">
+      <div class="form-check">
+        <input type="checkbox" id="agreeTerms" name="terms" class="form-check-input" required>
+        <label for="agreeTerms" class="form-check-label">
+          <span data-translate="agree_terms">أوافق على</span>
+          <a href="#" data-translate="terms_conditions">الشروط والأحكام</a>
+          <span data-translate="and">و</span>
+          <a href="#" data-translate="privacy_policy">سياسة الخصوصية</a>
+        </label>
+        <small id="error_terms" class="text-danger"></small>
+      </div>
+    </div>
+
+    <!-- زر التسجيل -->
+    <div class="col-12">
+      <button type="submit" name="submit" class="btn btn-primary w-100">
+        <i class="bi bi-person-plus"></i>
+        <span data-translate="register">إنشاء حساب</span>
+      </button>
+    </div>
+
+  </div>
+</form>
+
+
         </div>
       </div>
     </div>
   </div>
 
-
   <!-- Success Message Modal -->
+
   <div class="modal fade" id="successModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -695,10 +786,39 @@
   </div>
 
   <!-- Scripts -->
+
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
   <script src="js/main.js"></script>
+  <script src="js/lang.js"></script>
+
+  <!-- Additional JavaScript for form validation -->
+<script>
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    fetch("auth/login_post.php", {
+        method: "POST",
+        body: new FormData(this)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === "success") {
+            // ✅ تحويل لصفحة الحجوزات
+            window.location.href = data.redirect;
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(err => console.error("Error:", err));
+});
+
+</script>
+
 </body>
 
 </html>

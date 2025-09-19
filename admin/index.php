@@ -53,10 +53,13 @@
                     </label>
                 </div>
                 
-                <button type="submit" class="btn btn-primary w-100 mb-3" data-ar="تسجيل الدخول" data-en="Login">
+                <a href="dashboard.php">
+                          <button type="submit" class="btn btn-primary w-100 mb-3" data-ar="تسجيل الدخول" data-en="Login">
                     <i class="fas fa-sign-in-alt me-2"></i>
                     تسجيل الدخول
-                </button>
+                </button>  
+                </a>
+        
                 
                 <div class="text-center">
                     <a href="#" class="forgot-password" data-ar="نسيت كلمة المرور؟" data-en="Forgot Password?">نسيت كلمة المرور؟</a>

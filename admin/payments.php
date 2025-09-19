@@ -33,37 +33,37 @@
         <nav class="sidebar-nav">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.html">
+                    <a class="nav-link" href="dashboard.php">
                         <i class="fas fa-tachometer-alt"></i>
                         <span data-ar="لوحة التحكم" data-en="Dashboard">لوحة التحكم</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="doctors.html">
+                    <a class="nav-link" href="doctors.php">
                         <i class="fas fa-user-md"></i>
                         <span data-ar="الأطباء" data-en="Doctors">الأطباء</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="patients.html">
+                    <a class="nav-link" href="patients.php">
                         <i class="fas fa-users"></i>
                         <span data-ar="المرضى" data-en="Patients">المرضى</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="appointments.html">
+                    <a class="nav-link" href="appointments.php">
                         <i class="fas fa-calendar-alt"></i>
                         <span data-ar="المواعيد" data-en="Appointments">المواعيد</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="payments.html">
+                    <a class="nav-link active" href="payments.php">
                         <i class="fas fa-credit-card"></i>
                         <span data-ar="المدفوعات" data-en="Payments">المدفوعات</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="settings.html">
+                    <a class="nav-link" href="settings.php">
                         <i class="fas fa-cog"></i>
                         <span data-ar="الإعدادات" data-en="Settings">الإعدادات</span>
                     </a>
@@ -104,7 +104,7 @@
                             <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i><span data-ar="الملف الشخصي" data-en="Profile">الملف الشخصي</span></a></li>
                             <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i><span data-ar="الإعدادات" data-en="Settings">الإعدادات</span></a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt me-2"></i><span data-ar="تسجيل الخروج" data-en="Logout">تسجيل الخروج</span></a></li>
+                            <li><a class="dropdown-item" href="index.php"><i class="fas fa-sign-out-alt me-2"></i><span data-ar="تسجيل الخروج" data-en="Logout">تسجيل الخروج</span></a></li>
                         </ul>
                     </div>
                 </div>
