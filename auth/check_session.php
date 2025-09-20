@@ -1,17 +1,20 @@
-<?php
-session_start();
-header('Content-Type: application/json');
+// التحقق من تسجيل الدخول عند تحميل الصفحة
 
-$response = array('status' => 'error', 'user' => null);
+<script>
+window.addEventListener('load', () => {
+    fetch('auth/check_session.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success' && data.user) {
+                // المستخدم مسجل دخول → توجيه لصفحة الحجوزات
+                window.location.href = "../booking_appo/booking.php";
+            } 
+            // إذا مش مسجل دخول → يبقى في نفس الصفحة
+        })
+        .catch(error => {
+            console.error('Session check error:', error);
+        });
+});
 
-if (isset($_SESSION['user_id']) && isset($_SESSION['user_email']) && isset($_SESSION['user_name'])) {
-    $response['status'] = 'success';
-    $response['user'] = array(
-        'id' => $_SESSION['user_id'],
-        'email' => $_SESSION['user_email'],
-        'name' => $_SESSION['user_name']
-    );
-}
+</script>
 
-echo json_encode($response);
-?>

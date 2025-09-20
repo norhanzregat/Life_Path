@@ -150,5 +150,13 @@ try {
     $response['message'] = "حدث خطأ في النظام. يرجى المحاولة مرة أخرى.";
 }
 
+// بدلاً من echo json_encode($response);
+if ($response['status'] === 'success') {
+    $_SESSION['registration_success'] = $response['message'];
+    $_SESSION['registered_email'] = $email;
+}
 echo json_encode($response);
+
 ?>
+
+

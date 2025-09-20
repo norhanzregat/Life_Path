@@ -61,7 +61,7 @@ try {
 
             $response['status'] = 'success';
             $response['message'] = "تم تسجيل الدخول بنجاح!";
-            $response['redirect'] = "../booking_appo/booking.php"; // ✅ أرجع رابط التحويل
+            $response['redirect'] = "../booking_appo/booking.php";
         } else {
             $response['message'] = "كلمة المرور غير صحيحة.";
         }
@@ -74,3 +74,4 @@ try {
 }
 
 echo json_encode($response);
+?>
