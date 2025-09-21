@@ -1,7 +1,37 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../auth/login_post.php");
+    exit;
+}
+
+// Include the database connection
+include_once '../connection.php';
+$database = new Database();
+$db = $database->getConnection();
+
+// Get user information
+$user_id = $_SESSION['user_id'];
+$user_name = $_SESSION['user_name'];
+$user_email = $_SESSION['user_email'];
+
+// We might also want to fetch the user's phone and other details from the database
+$query = "SELECT * FROM users WHERE id = :user_id";
+$stmt = $db->prepare($query);
+$stmt->bindParam(':user_id', $user_id);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Fetch user's previous appointments
+$query = "SELECT * FROM appointments WHERE user_id = :user_id ORDER BY created_at DESC";
+$stmt = $db->prepare($query);
+$stmt->bindParam(':user_id', $user_id);
+$stmt->execute();
+$appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,15 +88,14 @@
                     <!-- User Profile -->
                     <a href="#" class="d-flex align-items-center nav-link profile-link" data-bs-toggle="modal"
                         data-bs-target="#profileModal">
-                        <img src="https://ui-avatars.com/api/?name=نورهان+أحمد&background=2563eb&color=fff"
+                        <img src="https://ui-avatars.com/api/?name=<?php echo urlencode($user_name); ?>&background=2563eb&color=fff"
                             class="user-avatar me-2 rounded-circle" style="height: 35px; width: 35px;"
                             id="navbarUserAvatar">
-                        <span data-translate="hello">مرحباً</span>, <span id="userFirstName"
-                            data-translate="userFirstName">نورهان</span>
+                        <span data-translate="hello">مرحباً</span>, <span id="userFirstName"><?php echo explode(' ', $user_name)[0]; ?></span>
                     </a>
 
                     <!-- Logout -->
-                    <a class="btn btn-outline-primary ms-3 logout-btn" href="../index.html">
+                    <a class="btn btn-outline-primary ms-3 logout-btn" href="../auth/logout.php">
                         <i data-translate="logout" class="fas fa-sign-out-alt me-1"></i>تسجيل الخروج
                     </a>
                 </div>
@@ -79,19 +108,44 @@
         <div class="row stats-section">
             <div class="col-md-3 col-6 mb-3">
                 <div class="stats-card">
-                    <div class="stats-number">3</div>
+                    <div class="stats-number"><?php 
+                        $upcoming = 0;
+                        foreach ($appointments as $app) {
+                            if (strtotime($app['appointment_date']) > time() && $app['status'] == 'confirmed') {
+                                $upcoming++;
+                            }
+                        }
+                        echo $upcoming;
+                    ?></div>
                     <div class="stats-label" data-translate="upcoming_appointments">المواعيد القادمة</div>
                 </div>
             </div>
             <div class="col-md-3 col-6 mb-3">
                 <div class="stats-card">
-                    <div class="stats-number">7</div>
+                    <div class="stats-number"><?php 
+                        $completed = 0;
+                        foreach ($appointments as $app) {
+                            if ($app['status'] == 'completed') {
+                                $completed++;
+                            }
+                        }
+                        echo $completed;
+                    ?></div>
                     <div class="stats-label" data-translate="completed_sessions">الجلسات المكتملة</div>
                 </div>
             </div>
             <div class="col-md-3 col-6 mb-3">
                 <div class="stats-card">
-                    <div class="stats-number">2</div>
+                    <div class="stats-number"><?php 
+                        $this_month = 0;
+                        $current_month = date('m');
+                        foreach ($appointments as $app) {
+                            if (date('m', strtotime($app['appointment_date'])) == $current_month) {
+                                $this_month++;
+                            }
+                        }
+                        echo $this_month;
+                    ?></div>
                     <div class="stats-label" data-translate="this_month">هذا الشهر</div>
                 </div>
             </div>
@@ -105,7 +159,7 @@
 
         <!-- Hero Section -->
         <div class="hero">
-            <h2 data-translate="hello_name">مرحباً نورهان</h2>
+            <h2 data-translate="hello_name">مرحباً <?php echo $user_name; ?></h2>
             <h3 data-translate="booking_prompt">ابدأ بحجز موعدك الآن</h3>
             <p class="lead" data-translate="booking_description">صحتك النفسية هي أولويتنا. اختر القسم والطبيب وحدد
                 موعداً يناسبك.</p>
@@ -145,15 +199,15 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="bookingFullName" class="form-label" data-translate="full_name">الاسم الكامل</label>
-                        <input type="text" class="form-control" id="bookingFullName" name="bookingFullName" required>
+                        <input type="text" class="form-control" id="bookingFullName" name="bookingFullName" value="<?php echo $user_name; ?>" required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="bookingEmail" class="form-label" data-translate="email">البريد الإلكتروني</label>
-                        <input type="email" class="form-control" id="bookingEmail" name="bookingEmail" required>
+                        <input type="email" class="form-control" id="bookingEmail" name="bookingEmail" value="<?php echo $user_email; ?>" required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="bookingPhone" class="form-label" data-translate="phone">رقم الهاتف</label>
-                        <input type="tel" class="form-control" id="bookingPhone" name="bookingPhone" required>
+                        <input type="tel" class="form-control" id="bookingPhone" name="bookingPhone" value="<?php echo $user['phone'] ?? ''; ?>" required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="bookingNationalID" class="form-label" data-translate="national_id">الهوية
@@ -520,7 +574,6 @@
                 <table class="bookings-table">
                     <thead>
                         <tr>
-
                             <th data-translate="booking_id">رقم الحجز</th>
                             <th data-translate="doctor">الطبيب</th>
                             <th data-translate="date">التاريخ</th>
@@ -530,7 +583,41 @@
                         </tr>
                     </thead>
                     <tbody id="bookingsTableBody">
-                        <!-- Filled via JavaScript -->
+                        <?php foreach ($appointments as $appointment): ?>
+                        <tr>
+                            <td><?php echo $appointment['booking_id']; ?></td>
+                            <td><?php echo $appointment['doctor']; ?></td>
+                            <td><?php echo $appointment['appointment_date']; ?></td>
+                            <td><?php echo date('H:i', strtotime($appointment['appointment_time'])); ?></td>
+                            <td>
+                                <span class="status-badge 
+                                    <?php 
+                                    if ($appointment['status'] == 'confirmed') echo 'status-confirmed';
+                                    elseif ($appointment['status'] == 'completed') echo 'status-completed';
+                                    elseif ($appointment['status'] == 'cancelled') echo 'status-cancelled';
+                                    else echo 'status-pending';
+                                    ?>
+                                ">
+                                    <?php 
+                                    if ($appointment['status'] == 'confirmed') echo 'مؤكد';
+                                    elseif ($appointment['status'] == 'completed') echo 'مكتمل';
+                                    elseif ($appointment['status'] == 'cancelled') echo 'ملغى';
+                                    else echo 'قيد الانتظار';
+                                    ?>
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary" onclick="viewBooking('<?php echo $appointment['booking_id']; ?>')">
+                                    <i class="fas fa-eye"></i> عرض
+                                </button>
+                                <?php if ($appointment['status'] == 'pending'): ?>
+                                <button class="btn btn-sm btn-outline-danger" onclick="cancelBooking('<?php echo $appointment['booking_id']; ?>')">
+                                    <i class="fas fa-times"></i> إلغاء
+                                </button>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -552,7 +639,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="profile-img-container text-center mb-4">
-                        <img src="https://ui-avatars.com/api/?name=نورهان+أحمد&background=2563eb&color=fff"
+                        <img src="https://ui-avatars.com/api/?name=<?php echo urlencode($user_name); ?>&background=2563eb&color=fff"
                             class="profile-img" id="modalProfileImg">
                         <div class="mt-3">
                             <input type="file" id="profilePhotoInput" class="d-none" accept="image/*">
@@ -592,26 +679,23 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" data-translate="full_name">الاسم الكامل</label>
-                                        <input type="text" class="form-control" id="fullName" value="نورهان أحمد"
-                                            required>
+                                        <input type="text" class="form-control" id="fullName" value="<?php echo $user_name; ?>" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" data-translate="email">البريد الإلكتروني</label>
-                                        <input type="email" class="form-control" id="email" value="norhan@example.com"
-                                            required>
+                                        <input type="email" class="form-control" id="email" value="<?php echo $user_email; ?>" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" data-translate="phone">رقم الهاتف</label>
-                                        <input type="text" class="form-control" id="phone" value="+966512345678">
+                                        <input type="text" class="form-control" id="phone" value="<?php echo $user['phone'] ?? ''; ?>">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" data-translate="date_of_birth">تاريخ الميلاد</label>
-                                        <input type="date" class="form-control" id="dob" value="1990-01-01">
+                                        <input type="date" class="form-control" id="dob" value="<?php echo $user['dob'] ?? ''; ?>">
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <label class="form-label" data-translate="address">العنوان</label>
-                                        <textarea class="form-control" id="address" rows="2"
-                                            data-translate="address_city">المدينة, العنوان</textarea>
+                                        <textarea class="form-control" id="address" rows="2"><?php echo $user['address'] ?? ''; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="text-center mt-4">
@@ -637,21 +721,31 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php foreach ($appointments as $appointment): ?>
                                         <tr>
-                                            <td>2025-09-03</td>
-                                            <td>10:00 صباحاً</td>
-                                            <td>د. سارة يوسف</td>
+                                            <td><?php echo $appointment['appointment_date']; ?></td>
+                                            <td><?php echo date('H:i', strtotime($appointment['appointment_time'])); ?></td>
+                                            <td><?php echo $appointment['doctor']; ?></td>
                                             <td>في العيادة</td>
-                                            <td><span class="badge bg-success">مؤكد</span></td>
+                                            <td>
+                                                <span class="badge 
+                                                    <?php 
+                                                    if ($appointment['status'] == 'confirmed') echo 'bg-success';
+                                                    elseif ($appointment['status'] == 'completed') echo 'bg-secondary';
+                                                    elseif ($appointment['status'] == 'cancelled') echo 'bg-danger';
+                                                    else echo 'bg-warning text-dark';
+                                                    ?>
+                                                ">
+                                                    <?php 
+                                                    if ($appointment['status'] == 'confirmed') echo 'مؤكد';
+                                                    elseif ($appointment['status'] == 'completed') echo 'مكتمل';
+                                                    elseif ($appointment['status'] == 'cancelled') echo 'ملغى';
+                                                    else echo 'قيد الانتظار';
+                                                    ?>
+                                                </span>
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td>2025-09-10</td>
-                                            <td>2:00 مساءً</td>
-                                            <td>د. أحمد علي</td>
-                                            <td>أونلاين</td>
-                                            <td><span class="badge bg-warning text-dark" data-translate="pending">قيد
-                                                    الانتظار</span></td>
-                                        </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -699,18 +793,18 @@
                     <h5 data-translate="clinic_name">عيادة مسار الحياة</h5>
                     <p data-translate="copyright">&copy; 2025 عيادة مسار الحياة. جميع الحقوق محفوظة.</p>
                     <p data-translate="address"><strong>العنوان:</strong> عمان، الأردن</p>
-                    <p data-translate="phone"><strong>الهاتف:</strong> +966 12 345 6789</p>
+                    <p data-translate="phone"><strong> الهاتف:</strong> +966 12 345 6789</p>
                     <p data-translate="email"><strong>البريد الإلكتروني:</strong> <a
                             href="mailto:info@lifepathclinic.com">info@lifepathclinic.com</a></p>
                     <p data-translate="working_hours_clinic"><strong data-translate="working_hours_sub">ساعات
                             العمل:</strong>
-                        الأحد - الخميس: 8 صباحاً - 6 مساءً | الجمعة: 9 صباحاً - 3 مساءً< /p>
-                            <p>
-                                <a href="#"><i class="fab fa-facebook me-2"></i></a>
-                                <a href="#"><i class="fab fa-twitter me-2"></i></a>
-                                <a href="#"><i class="fab fa-instagram me-2"></i></a>
-                                <a href="#"><i class="fab fa-linkedin me-2"></i></a>
-                            </p>
+                        الأحد - الخميس: 8 صباحاً - 6 مساءً | الجمعة: 9 صباحاً - 3 مساءً</p>
+                    <p>
+                        <a href="#"><i class="fab fa-facebook me-2"></i></a>
+                        <a href="#"><i class="fab fa-twitter me-2"></i></a>
+                        <a href="#"><i class="fab fa-instagram me-2"></i></a>
+                        <a href="#"><i class="fab fa-linkedin me-2"></i></a>
+                    </p>
                 </div>
 
                 <!-- Middle Side: Quick Links -->
@@ -753,8 +847,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script>
+    // JavaScript variables for user data
+    const userId = <?php echo $user_id; ?>;
+    const userFullName = "<?php echo $user_name; ?>";
+    const userEmail = "<?php echo $user_email; ?>";
+    const userPhone = "<?php echo $user['phone'] ?? ''; ?>";
+    </script>
+<script>
+    
+</script>
     <script src="booking.js"></script>
     <script src="../js/lang.js"></script>
+
 </body>
 
 </html>

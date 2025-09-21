@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 20, 2025 at 10:42 PM
+-- Generation Time: Sep 21, 2025 at 01:18 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -20,6 +20,36 @@ SET time_zone = "+00:00";
 --
 -- Database: `life_path`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointments`
+--
+
+DROP TABLE IF EXISTS `appointments`;
+CREATE TABLE IF NOT EXISTS `appointments` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `full_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `national_id` varchar(20) NOT NULL,
+  `age` int NOT NULL,
+  `notes` text,
+  `department` varchar(100) NOT NULL,
+  `doctor` varchar(255) NOT NULL,
+  `appointment_date` date NOT NULL,
+  `appointment_time` time NOT NULL,
+  `booking_id` varchar(50) NOT NULL,
+  `status` enum('pending','confirmed','cancelled','completed') DEFAULT 'pending',
+  `payment_method` varchar(50) DEFAULT NULL,
+  `payment_status` enum('pending','paid') DEFAULT 'pending',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `booking_id` (`booking_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
