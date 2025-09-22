@@ -14,9 +14,49 @@
                 <label for="email">البريد الإلكتروني</label>
                 <input type="email" class="form-control" name="email" required>
             </div>
-            <div class="mb-3">
-                <label for="password">كلمة المرور</label>
-                <input type="password" class="form-control" name="password" required>
+            
+            <form class="login-form" id="loginForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label" data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label" data-ar="كلمة المرور" data-en="Password">كلمة المرور</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="password" required>
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="remember">
+                    <label class="form-check-label" for="remember" data-ar="تذكرني" data-en="Remember me">
+                        تذكرني
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100 mb-3" data-ar="تسجيل الدخول" data-en="Login">
+                    <i class="fas fa-sign-in-alt me-2"></i>
+                    تسجيل الدخول
+                </button>
+                
+                <div class="text-center">
+                    <a href="#" class="forgot-password" data-ar="نسيت كلمة المرور؟" data-en="Forgot Password?">نسيت كلمة المرور؟</a>
+                </div>
+            </form>
+            
+            <div class="language-switch">
+                <button class="btn btn-outline-primary btn-sm" id="langToggle">
+                    <i class="fas fa-globe me-1"></i>
+                    <span id="langText">English</span>
+                </button>
             </div>
             <button type="submit" class="btn btn-primary w-100">دخول</button>
         </form>

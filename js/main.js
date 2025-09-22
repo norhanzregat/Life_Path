@@ -1,35 +1,168 @@
 // ===== Global Variables =====
-let currentLanguage = localStorage.getItem('language') || 'ar';
-let translations = {};
 let currentBookingStep = 1;
 let bookingData = {};
 let teamMembers = [];
 let services = [];
+let currentLanguage = 'ar'; // اللغة الافتراضية
+let translations = {}; // كائن الترجمة
 
 // ===== DOM Content Loaded =====
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeApp();
 });
 
 // ===== App Initialization =====
 async function initializeApp() {
     showLoadingScreen();
-    
+
     try {
-        await loadTranslations();
-        initializeLanguage();
+        // تحميل اللغة المحفوظة إذا وجدت
+        const savedLanguage = localStorage.getItem('selectedLanguage');
+        if (savedLanguage) {
+            currentLanguage = savedLanguage;
+            updateLanguageIndicator();
+        }
+
+        // تحميل الترجمة المناسبة
+        await loadTranslation(currentLanguage);
+
         initializeNavigation();
         initializeModals();
         initializeBookingSystem();
         initializeForms();
         initializeAnimations();
+        initializeLanguageSelector(); // تهيئة اختيار اللغة
         await loadInitialData();
-        
-        
+
         setTimeout(hideLoadingScreen, 1500);
     } catch (error) {
         console.error('App initialization error:', error);
         hideLoadingScreen();
+    }
+}
+
+// ===== نظام الترجمة =====
+async function loadTranslation(lang) {
+    const translationFile = `locales/${lang}.json`;
+
+    try {
+        const response = await fetch(translationFile);
+        if (!response.ok) {
+            throw new Error(`Failed to load translation file: ${translationFile}`);
+        }
+        translations = await response.json();
+        applyTranslations();
+        updatePageDirection(lang);
+        updateLanguageIndicator();
+    } catch (error) {
+        console.error('Error loading translation:', error);
+        // المحاولة بتحميل اللغة الافتراضية عند الفشل
+        if (lang !== 'ar') {
+            await loadTranslation('ar');
+        }
+    }
+}
+
+// تطبيق الترجمة على جميع العناصر
+function applyTranslations() {
+    // العناصر التي تحتوي على سمة data-translate
+    const translatableElements = document.querySelectorAll('[data-translate]');
+
+    translatableElements.forEach(element => {
+        const key = element.getAttribute('data-translate');
+
+        if (translations[key]) {
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                element.placeholder = translations[key];
+            } else if (element.tagName === 'OPTION') {
+                element.textContent = translations[key];
+            } else if (element.hasAttribute('title')) {
+                element.setAttribute('title', translations[key]);
+            } else if (element.hasAttribute('alt')) {
+                element.setAttribute('alt', translations[key]);
+            } else {
+                element.textContent = translations[key];
+            }
+        }
+    });
+
+    // تحديث البيانات الديناميكية التي تعتمد على اللغة
+    if (teamMembers.length > 0) {
+        displayTeamMembers();
+    }
+
+    if (services.length > 0) {
+        displayBookingServices();
+    }
+
+    // تحديث بيانات الحجز إذا كان النموذج مفتوحاً
+    if (currentBookingStep > 1) {
+        updateBookingStep();
+        if (currentBookingStep === 2) loadBookingDoctors();
+        else if (currentBookingStep === 3) loadBookingCalendar();
+        else if (currentBookingStep === 4) displayBookingSummary();
+    }
+}
+
+// تحديث اتجاه الصفحة بناءً على اللغة
+function updatePageDirection(lang) {
+    if (lang === 'ar') {
+        document.documentElement.dir = 'rtl';
+        document.documentElement.lang = 'ar';
+        document.body.classList.add('rtl');
+        document.body.classList.remove('ltr');
+    } else {
+        document.documentElement.dir = 'ltr';
+        document.documentElement.lang = 'en';
+        document.body.classList.add('ltr');
+        document.body.classList.remove('rtl');
+    }
+}
+
+// تحديث مؤشر اللغة في واجهة المستخدم
+function updateLanguageIndicator() {
+    const currentLanguageElement = document.getElementById('currentLanguage');
+    if (currentLanguageElement) {
+        if (currentLanguage === 'ar') {
+            currentLanguageElement.textContent = 'العربية';
+        } else {
+            currentLanguageElement.textContent = 'English';
+        }
+    }
+}
+
+// تهيئة اختيار اللغة
+function initializeLanguageSelector() {
+    const languageButton = document.getElementById('languageButton');
+    const languageDropdown = document.getElementById('languageDropdown');
+
+    if (languageButton && languageDropdown) {
+        // فتح/إغلاق قائمة اللغة
+        languageButton.addEventListener('click', function (e) {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('show');
+        });
+
+        // اختيار لغة جديدة
+        const languageOptions = document.querySelectorAll('.language-option');
+        languageOptions.forEach(option => {
+            option.addEventListener('click', function () {
+                const selectedLang = this.getAttribute('data-lang');
+                if (selectedLang !== currentLanguage) {
+                    currentLanguage = selectedLang;
+                    localStorage.setItem('selectedLanguage', currentLanguage);
+                    loadTranslation(currentLanguage);
+                    languageDropdown.classList.remove('show');
+                }
+            });
+        });
+
+        // إغلاق قائمة اللغة عند النقر خارجها
+        document.addEventListener('click', function (e) {
+            if (!languageButton.contains(e.target) && !languageDropdown.contains(e.target)) {
+                languageDropdown.classList.remove('show');
+            }
+        });
     }
 }
 
@@ -51,141 +184,10 @@ function hideLoadingScreen() {
     }
 }
 
-// ===== Language System =====
-async function loadTranslations() {
-    try {
-        const arResponse = await fetch('language/ar.json');
-        const enResponse = await fetch('language/en.json');
-        
-        if (!arResponse.ok || !enResponse.ok) {
-            throw new Error('Failed to load translations');
-        }
-        
-        translations.ar = await arResponse.json();
-        translations.en = await enResponse.json();
-    } catch (error) {
-        console.error('Error loading translations:', error);
-        // Fallback translations
-        translations = {
-            ar: {
-                site_title: "Life Path - عيادة مسار الحياة النفسية",
-                nav_home: "الرئيسية",
-                nav_about: "عن العيادة",
-                nav_services: "خدماتنا",
-                nav_team: "فريقنا",
-                nav_contact: "اتصل بنا",
-                login: "تسجيل الدخول",
-                register: "إنشاء حساب",
-                hero_title: "ابدأ رحلة التعافي مع Life Path",
-                hero_subtitle: "نحن هنا لنساعدك في رحلتك نحو الصحة النفسية والتوازن الداخلي، مع فريق من الأخصائيين النفسيين ذوي الخبرة والكفاءة.",
-                book_appointment: "احجز موعدك الآن",
-                learn_more: "اعرف المزيد"
-            },
-            en: {
-                site_title: "Life Path - Psychological Clinic",
-                nav_home: "Home",
-                nav_about: "About",
-                nav_services: "Services",
-                nav_team: "Team",
-                nav_contact: "Contact",
-                login: "Login",
-                register: "Register",
-                hero_title: "Start Your Recovery Journey with Life Path",
-                hero_subtitle: "We are here to help you on your journey towards mental health and inner balance, with a team of experienced and competent psychologists.",
-                book_appointment: "Book Your Appointment Now",
-                learn_more: "Learn More"
-            }
-        };
-    }
-}
-
-function initializeLanguage() {
-    setLanguage(currentLanguage);
-    updateLanguageButton();
-}
-
-function setLanguage(lang) {
-    currentLanguage = lang;
-    localStorage.setItem('language', lang);
-    
-    // Update HTML attributes
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    
-    // Update font family
-    document.body.style.fontFamily = lang === 'ar' ? 'var(--font-family-ar)' : 'var(--font-family-en)';
-    
-    // Translate all elements
-    translatePage();
-    updateLanguageButton();
-}
-
-function translatePage() {
-    const elements = document.querySelectorAll('[data-translate]');
-    elements.forEach(element => {
-        const key = element.getAttribute('data-translate');
-        const translation = translations[currentLanguage]?.[key];
-        
-        if (translation) {
-            if (element.tagName === 'INPUT' && element.type === 'submit') {
-                element.value = translation;
-            } else if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                element.placeholder = translation;
-            } else {
-                element.textContent = translation;
-            }
-        }
-    });
-}
-
-function updateLanguageButton() {
-    const currentLanguageSpan = document.getElementById('currentLanguage');
-    const languageButton = document.getElementById('languageButton');
-    
-    if (currentLanguageSpan && languageButton) {
-        if (currentLanguage === 'ar') {
-            currentLanguageSpan.textContent = 'العربية';
-            languageButton.innerHTML = '<i class="bi bi-translate"></i><span>العربية</span><i class="bi bi-chevron-down"></i>';
-        } else {
-            currentLanguageSpan.textContent = 'English';
-            languageButton.innerHTML = '<i class="bi bi-translate"></i><span>English</span><i class="bi bi-chevron-down"></i>';
-        }
-    }
-}
-
 // ===== Navigation =====
 function initializeNavigation() {
-    // Navbar scroll effect
     window.addEventListener('scroll', handleNavbarScroll);
-    
-    // Language selector
-    const languageButton = document.getElementById('languageButton');
-    const languageDropdown = document.getElementById('languageDropdown');
-    const languageOptions = document.querySelectorAll('.language-option');
-    
-    if (languageButton && languageDropdown) {
-        languageButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            languageDropdown.classList.toggle('show');
-        });
-        
-        languageOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                const lang = option.getAttribute('data-lang');
-                setLanguage(lang);
-                languageDropdown.classList.remove('show');
-            });
-        });
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!languageButton.contains(e.target) && !languageDropdown.contains(e.target)) {
-                languageDropdown.classList.remove('show');
-            }
-        });
-    }
-    
-    // Smooth scrolling for navigation links
+
     const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -194,8 +196,7 @@ function initializeNavigation() {
             scrollToSection(targetId);
         });
     });
-    
-    // Active navigation highlighting
+
     window.addEventListener('scroll', updateActiveNavigation);
 }
 
@@ -224,17 +225,17 @@ function scrollToSection(sectionId) {
 function updateActiveNavigation() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-    
+
     let currentSection = '';
     sections.forEach(section => {
         const sectionTop = section.offsetTop - 100;
         const sectionHeight = section.offsetHeight;
-        
+
         if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
             currentSection = section.getAttribute('id');
         }
     });
-    
+
     navLinks.forEach(link => {
         link.classList.remove('active');
         const href = link.getAttribute('href').substring(1);
@@ -246,17 +247,16 @@ function updateActiveNavigation() {
 
 // ===== Modals =====
 function initializeModals() {
-    // Auth modal tabs
     const loginTab = document.getElementById('loginTab');
     const registerTab = document.getElementById('registerTab');
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
-    
+
     if (loginTab && registerTab && loginForm && registerForm) {
         loginTab.addEventListener('click', () => {
             switchAuthTab('login');
         });
-        
+
         registerTab.addEventListener('click', () => {
             switchAuthTab('register');
         });
@@ -268,7 +268,7 @@ function switchAuthTab(tab) {
     const registerTab = document.getElementById('registerTab');
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
-    
+
     if (tab === 'login') {
         loginTab.classList.add('active');
         registerTab.classList.remove('active');
@@ -284,25 +284,22 @@ function switchAuthTab(tab) {
 
 // ===== Forms =====
 function initializeForms() {
-    // Contact form
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', handleContactForm);
     }
-    
-    // Auth forms
+
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
-    
+
     if (loginForm) {
         loginForm.addEventListener('submit', handleLoginForm);
     }
-    
+
     if (registerForm) {
         registerForm.addEventListener('submit', handleRegisterForm);
     }
-    
-    // Set max date for date of birth
+
     const dobInput = document.getElementById('registerDob');
     if (dobInput) {
         const today = new Date().toISOString().split('T')[0];
@@ -312,16 +309,12 @@ function initializeForms() {
 
 async function handleContactForm(e) {
     e.preventDefault();
-    
+
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-    
+
     try {
         showFormLoading(e.target);
-        
-        // Simulate API call for demo
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
         showSuccessMessage(getTranslation('contact_success', 'تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.'));
         e.target.reset();
     } catch (error) {
@@ -334,55 +327,79 @@ async function handleContactForm(e) {
 
 async function handleLoginForm(e) {
     e.preventDefault();
-    
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
-    
+
     try {
         showFormLoading(e.target);
-        
-        // Simulate API call for demo
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        const user = {
-            id: 1,
-            name: 'مستخدم تجريبي',
-            email: data.email
-        };
-        
-        localStorage.setItem('user', JSON.stringify(user));
-        showSuccessMessage(getTranslation('login_success', 'تم تسجيل الدخول بنجاح!'));
-        
-        // Close modal and update UI
-        const authModal = bootstrap.Modal.getInstance(document.getElementById('authModal'));
-        if (authModal) {
-            authModal.hide();
+
+        // إرسال بيانات تسجيل الدخول إلى الخادم
+        const response = await fetch('auth/login_post.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            // ✅ عرض رسالة نجاح
+            showSuccessMessage(getTranslation('login_success', 'تم تسجيل الدخول بنجاح!'));
+
+            // إغلاق مودال تسجيل الدخول إذا كان مفتوح
+            const authModal = bootstrap.Modal.getInstance(document.getElementById('authModal'));
+            if (authModal) authModal.hide();
+
+            // تحديث واجهة المستخدم بناءً على حالة تسجيل الدخول
+            updateAuthUI(true);
+
+            // 🔥 إعادة توجيه المستخدم لصفحة الحجوزات
+            window.location.href = "/booking_appo/booking.php";
+        } else {
+            // ❌ عرض رسالة خطأ
+            showErrorMessage(result.message || getTranslation('login_error', 'خطأ في البريد الإلكتروني أو كلمة المرور.'));
         }
-        
-        updateUserInterface(user);
     } catch (error) {
         console.error('Login error:', error);
-        showErrorMessage(getTranslation('login_error', 'خطأ في البريد الإلكتروني أو كلمة المرور.'));
+        showErrorMessage(getTranslation('login_error', 'حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.'));
     } finally {
         hideFormLoading(e.target);
     }
 }
 
+
 async function handleRegisterForm(e) {
     e.preventDefault();
-    
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-    
+
     try {
         showFormLoading(e.target);
-        
-        // Simulate API call for demo
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        showSuccessMessage(getTranslation('register_success', 'تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.'));
-        switchAuthTab('login');
-        e.target.reset();
+
+        // إرسال بيانات التسجيل إلى الخادم
+        const response = await fetch('auth/register_post.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            switchAuthTab('login');
+            e.target.reset();
+        } else {
+            // عرض الأخطاء إذا وجدت
+            if (result.errors) {
+                let errorMessage = '';
+                for (const field in result.errors) {
+                    errorMessage += result.errors[field] + '\n';
+                }
+                showErrorMessage(errorMessage);
+            } else {
+                showErrorMessage(result.message || getTranslation('register_error', 'حدث خطأ أثناء إنشاء الحساب. يرجى المحاولة مرة أخرى.'));
+            }
+        }
     } catch (error) {
         console.error('Register error:', error);
         showErrorMessage(getTranslation('register_error', 'حدث خطأ أثناء إنشاء الحساب. يرجى المحاولة مرة أخرى.'));
@@ -396,24 +413,13 @@ function initializeBookingSystem() {
     const bookingForm = document.getElementById('bookingForm');
     const nextStepBtn = document.getElementById('nextStep');
     const prevStepBtn = document.getElementById('prevStep');
-    
-    if (nextStepBtn) {
-        nextStepBtn.addEventListener('click', nextBookingStep);
-    }
-    
-    if (prevStepBtn) {
-        prevStepBtn.addEventListener('click', prevBookingStep);
-    }
-    
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', handleBookingForm);
-    }
-    
-    // Initialize booking modal when opened
+
+    if (nextStepBtn) nextStepBtn.addEventListener('click', nextBookingStep);
+    if (prevStepBtn) prevStepBtn.addEventListener('click', prevBookingStep);
+    if (bookingForm) bookingForm.addEventListener('submit', handleBookingForm);
+
     const bookingModal = document.getElementById('bookingModal');
-    if (bookingModal) {
-        bookingModal.addEventListener('show.bs.modal', initializeBookingModal);
-    }
+    if (bookingModal) bookingModal.addEventListener('show.bs.modal', initializeBookingModal);
 }
 
 function initializeBookingModal() {
@@ -428,14 +434,9 @@ function nextBookingStep() {
         if (currentBookingStep < 4) {
             currentBookingStep++;
             updateBookingStep();
-            
-            if (currentBookingStep === 2) {
-                loadBookingDoctors();
-            } else if (currentBookingStep === 3) {
-                loadBookingCalendar();
-            } else if (currentBookingStep === 4) {
-                displayBookingSummary();
-            }
+            if (currentBookingStep === 2) loadBookingDoctors();
+            else if (currentBookingStep === 3) loadBookingCalendar();
+            else if (currentBookingStep === 4) displayBookingSummary();
         }
     }
 }
@@ -448,37 +449,26 @@ function prevBookingStep() {
 }
 
 function updateBookingStep() {
-    // Update step indicators
     const steps = document.querySelectorAll('.step');
     const stepContents = document.querySelectorAll('.booking-step-content');
     const nextBtn = document.getElementById('nextStep');
     const prevBtn = document.getElementById('prevStep');
     const confirmBtn = document.getElementById('confirmBooking');
-    
+
     steps.forEach((step, index) => {
         const stepNumber = index + 1;
         step.classList.remove('active', 'completed');
-        
-        if (stepNumber === currentBookingStep) {
-            step.classList.add('active');
-        } else if (stepNumber < currentBookingStep) {
-            step.classList.add('completed');
-        }
+        if (stepNumber === currentBookingStep) step.classList.add('active');
+        else if (stepNumber < currentBookingStep) step.classList.add('completed');
     });
-    
-    // Update step content
+
     stepContents.forEach((content, index) => {
         content.classList.remove('active');
-        if (index + 1 === currentBookingStep) {
-            content.classList.add('active');
-        }
+        if (index + 1 === currentBookingStep) content.classList.add('active');
     });
-    
-    // Update buttons
-    if (prevBtn) {
-        prevBtn.style.display = currentBookingStep > 1 ? 'inline-flex' : 'none';
-    }
-    
+
+    if (prevBtn) prevBtn.style.display = currentBookingStep > 1 ? 'inline-flex' : 'none';
+
     if (nextBtn && confirmBtn) {
         if (currentBookingStep === 4) {
             nextBtn.style.display = 'none';
@@ -492,14 +482,10 @@ function updateBookingStep() {
 
 function validateCurrentBookingStep() {
     switch (currentBookingStep) {
-        case 1:
-            return bookingData.service_id ? true : (showErrorMessage('يرجى اختيار الخدمة'), false);
-        case 2:
-            return bookingData.doctor_id ? true : (showErrorMessage('يرجى اختيار الطبيب'), false);
-        case 3:
-            return bookingData.date && bookingData.time ? true : (showErrorMessage('يرجى اختيار التاريخ والوقت'), false);
-        default:
-            return true;
+        case 1: return bookingData.service_id ? true : (showErrorMessage(getTranslation('select_service', 'يرجى اختيار الخدمة')), false);
+        case 2: return bookingData.doctor_id ? true : (showErrorMessage(getTranslation('select_doctor', 'يرجى اختيار الطبيب')), false);
+        case 3: return bookingData.date && bookingData.time ? true : (showErrorMessage(getTranslation('select_time', 'يرجى اختيار التاريخ والوقت')), false);
+        default: return true;
     }
 }
 
@@ -543,14 +529,14 @@ function loadBookingServices() {
             icon: 'bi bi-clipboard-data-fill'
         }
     ];
-    
+
     displayBookingServices();
 }
 
 function displayBookingServices() {
     const servicesGrid = document.getElementById('servicesGrid');
     if (!servicesGrid) return;
-    
+
     servicesGrid.innerHTML = services.map(service => `
         <div class="service-option" data-service-id="${service.id}" onclick="selectBookingService(${service.id})">
             <div class="service-option-icon">
@@ -565,7 +551,7 @@ function displayBookingServices() {
 
 function selectBookingService(serviceId) {
     bookingData.service_id = serviceId;
-    
+
     // Update UI
     const serviceOptions = document.querySelectorAll('.service-option');
     serviceOptions.forEach(option => {
@@ -585,7 +571,7 @@ function loadBookingDoctors() {
 function displayBookingDoctors(doctors) {
     const doctorsGrid = document.getElementById('doctorsGrid');
     if (!doctorsGrid) return;
-    
+
     doctorsGrid.innerHTML = doctors.map(doctor => `
         <div class="doctor-option" data-doctor-id="${doctor.id}" onclick="selectBookingDoctor(${doctor.id})">
             <img src="${doctor.image}" alt="${currentLanguage === 'ar' ? doctor.name : doctor.name_en}" class="doctor-option-image">
@@ -603,7 +589,7 @@ function displayBookingDoctors(doctors) {
 
 function selectBookingDoctor(doctorId) {
     bookingData.doctor_id = doctorId;
-    
+
     // Update UI
     const doctorOptions = document.querySelectorAll('.doctor-option');
     doctorOptions.forEach(option => {
@@ -618,35 +604,35 @@ function loadBookingCalendar() {
     // Generate available dates for next 30 days (excluding weekends)
     const availableDates = [];
     const today = new Date();
-    
+
     for (let i = 1; i <= 30; i++) {
         const date = new Date(today);
         date.setDate(today.getDate() + i);
-        
+
         // Skip weekends (Friday = 5, Saturday = 6)
         if (date.getDay() !== 5 && date.getDay() !== 6) {
             availableDates.push(date.toISOString().split('T')[0]);
         }
     }
-    
+
     displayBookingCalendar(availableDates);
 }
 
 function displayBookingCalendar(availableDates) {
     const calendarContainer = document.getElementById('calendarContainer');
     if (!calendarContainer) return;
-    
+
     // Generate calendar for next 30 days
     const today = new Date();
     const calendar = [];
-    
+
     for (let i = 0; i < 30; i++) {
         const date = new Date(today);
         date.setDate(today.getDate() + i);
-        
+
         const dateStr = date.toISOString().split('T')[0];
         const isAvailable = availableDates.includes(dateStr);
-        
+
         calendar.push({
             date: dateStr,
             day: date.getDate(),
@@ -656,7 +642,7 @@ function displayBookingCalendar(availableDates) {
             available: isAvailable
         });
     }
-    
+
     calendarContainer.innerHTML = calendar.map(day => `
         <div class="calendar-day ${day.available ? 'available' : 'unavailable'}" 
              data-date="${day.date}" 
@@ -669,7 +655,7 @@ function displayBookingCalendar(availableDates) {
 
 function selectBookingDate(date) {
     bookingData.date = date;
-    
+
     // Update UI
     const calendarDays = document.querySelectorAll('.calendar-day');
     calendarDays.forEach(day => {
@@ -678,7 +664,7 @@ function selectBookingDate(date) {
             day.classList.add('selected');
         }
     });
-    
+
     // Load available time slots
     const timeSlots = [
         { time: '09:00', available: true },
@@ -690,14 +676,14 @@ function selectBookingDate(date) {
         { time: '16:00', available: false },
         { time: '17:00', available: true }
     ];
-    
+
     displayTimeSlots(timeSlots);
 }
 
 function displayTimeSlots(timeSlots) {
     const timeSlotsContainer = document.getElementById('timeSlots');
     if (!timeSlotsContainer) return;
-    
+
     timeSlotsContainer.innerHTML = timeSlots.map(slot => `
         <div class="time-slot ${slot.available ? 'available' : 'unavailable'}" 
              data-time="${slot.time}" 
@@ -709,7 +695,7 @@ function displayTimeSlots(timeSlots) {
 
 function selectBookingTime(time) {
     bookingData.time = time;
-    
+
     // Update UI
     const timeSlots = document.querySelectorAll('.time-slot');
     timeSlots.forEach(slot => {
@@ -723,17 +709,17 @@ function selectBookingTime(time) {
 function displayBookingSummary() {
     const summaryContainer = document.getElementById('bookingSummary');
     if (!summaryContainer) return;
-    
+
     const service = services.find(s => s.id === bookingData.service_id);
     const doctor = teamMembers.find(d => d.id === bookingData.doctor_id);
     const selectedDate = new Date(bookingData.date);
-    const formattedDate = selectedDate.toLocaleDateString(currentLanguage === 'ar' ? 'ar' : 'en', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+    const formattedDate = selectedDate.toLocaleDateString(currentLanguage === 'ar' ? 'ar' : 'en', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
     });
-    
+
     summaryContainer.innerHTML = `
         <div class="booking-summary-card">
             <div class="summary-item">
@@ -762,33 +748,45 @@ function displayBookingSummary() {
 
 async function handleBookingForm(e) {
     e.preventDefault();
-    
+
     const formData = new FormData(e.target);
     const patientData = Object.fromEntries(formData.entries());
-    
+
     const completeBookingData = {
         ...bookingData,
         ...patientData
     };
-    
+
     try {
         showFormLoading(e.target);
-        
-        // Simulate API call for demo
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        showSuccessMessage(getTranslation('booking_success', 'تم حجز موعدك بنجاح! سنتواصل معك قريباً لتأكيد الموعد.'));
-        
-        // Close modal
-        const bookingModal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
-        if (bookingModal) {
-            bookingModal.hide();
+
+        // إرسال بيانات الحجز إلى الخادم
+        const response = await fetch('booking_appo/booking.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(completeBookingData)
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            showSuccessMessage(getTranslation('booking_success', 'تم حجز موعدك بنجاح! سنتواصل معك قريباً لتأكيد الموعد.'));
+
+            // Close modal
+            const bookingModal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
+            if (bookingModal) {
+                bookingModal.hide();
+            }
+
+            // Reset form
+            e.target.reset();
+            currentBookingStep = 1;
+            bookingData = {};
+        } else {
+            showErrorMessage(result.message || getTranslation('booking_error', 'حدث خطأ أثناء حجز الموعد. يرجى المحاولة مرة أخرى.'));
         }
-        
-        // Reset form
-        e.target.reset();
-        currentBookingStep = 1;
-        bookingData = {};
     } catch (error) {
         console.error('Booking error:', error);
         showErrorMessage(getTranslation('booking_error', 'حدث خطأ أثناء حجز الموعد. يرجى المحاولة مرة أخرى.'));
@@ -854,9 +852,9 @@ async function loadTeamMembers() {
 function displayTeamMembers() {
     const teamContainer = document.getElementById('teamContainer');
     if (!teamContainer) return;
-    
+
     const displayMembers = teamMembers.slice(0, 3); // Show first 3 members
-    
+
     teamContainer.innerHTML = displayMembers.map(member => `
         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="${member.id * 100}">
             <div class="team-card">
@@ -891,7 +889,7 @@ function initializeAnimations() {
             offset: 100
         });
     }
-    
+
     // Add scroll-triggered animations
     window.addEventListener('scroll', handleScrollAnimations);
 }
@@ -905,39 +903,39 @@ function generateStars(rating) {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    
+
     let stars = '';
-    
+
     // Full stars
     for (let i = 0; i < fullStars; i++) {
         stars += '<i class="bi bi-star-fill"></i>';
     }
-    
+
     // Half star
     if (hasHalfStar) {
         stars += '<i class="bi bi-star-half"></i>';
     }
-    
+
     // Empty stars
     for (let i = 0; i < emptyStars; i++) {
         stars += '<i class="bi bi-star"></i>';
     }
-    
+
     return stars;
 }
 
 function getTranslation(key, fallback = '') {
-    return translations[currentLanguage]?.[key] || fallback;
+    return translations[key] || fallback;
 }
 
 function showSuccessMessage(message) {
     const successModal = new bootstrap.Modal(document.getElementById('successModal'));
     const successMessage = document.getElementById('successMessage');
-    
+
     if (successMessage) {
         successMessage.textContent = message;
     }
-    
+
     successModal.show();
 }
 
@@ -971,28 +969,109 @@ function hideFormLoading(form) {
     }
 }
 
-function updateUserInterface(user) {
+//******************************************************** */function updateUserInterface(user) {
     // Update login button to show user name
+function updateUserInterface(user) {
+}
+ndow.addEventListener('load', () => {
+    // التحقق من وجود جلسة مستخدم نشطة
+    fetch('auth/check_session.php')
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success' && data.user) {
+            updateUserInterface(data.user);
+        }
+    })
+    .catch(error => {
+        console.error('Session check error:', error);
+    });
+});
+/******************************/ 
+
+// تحديث واجهة المستخدم بناءً على حالة المصادقة
+function updateAuthUI(isLoggedIn) {
     const loginBtn = document.querySelector('.login-btn');
-    if (loginBtn && user) {
-        loginBtn.innerHTML = `
-            <i class="bi bi-person-check"></i>
-            <span>مرحباً، ${user.name}</span>
-        `;
-        loginBtn.onclick = () => {
-            // Show user menu or logout
-            if (confirm('هل تريد تسجيل الخروج؟')) {
-                localStorage.removeItem('user');
-                location.reload();
-            }
-        };
+    if (loginBtn) {
+        if (isLoggedIn) {
+            loginBtn.innerHTML = `
+                <i class="bi bi-person-check"></i>
+                <span>${getTranslation('my_account', 'حسابي')}</span>
+            `;
+            // يمكن إضافة رابط إلى صفحة الملف الشخصي
+            loginBtn.onclick = () => {
+                window.location.href = 'profile.php';
+            };
+        } else {
+            loginBtn.innerHTML = `
+                <i class="bi bi-person"></i>
+                <span>${getTranslation('login_register', 'تسجيل الدخول / إنشاء حساب')}</span>
+            `;
+            // فتح نافذة المصادقة
+            loginBtn.onclick = () => {
+                const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+                authModal.show();
+            };
+        }
     }
 }
 
-// Check if user is logged in on page load
-window.addEventListener('load', () => {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    if (user) {
-        updateUserInterface(user);
+//نقل المستخدم لصفحة الحجوزات اذا مسجب دخول 
+
+// تهيئة معالجات النماذج
+document.addEventListener('DOMContentLoaded', function () {
+    // Phone input formatting
+    const phoneInput = document.getElementById('registerPhone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function (e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
     }
+
+    // Form validation
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function (e) {
+            // Clear previous errors
+            const errorElements = document.querySelectorAll('.error-message');
+            errorElements.forEach(el => el.textContent = '');
+
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            const phone = phoneInput ? phoneInput.value : '';
+            let errors = [];
+
+            // Check password match
+            if (password !== confirmPassword) {
+                errors.push(getTranslation('password_mismatch', 'كلمات المرور غير متطابقة'));
+            }
+
+            // Check password length
+            if (password.length < 8) {
+                errors.push(getTranslation('password_length', 'كلمة المرور يجب أن تكون 8 أحرف على الأقل'));
+            }
+
+            // Check password complexity
+            if (!/[A-Za-z]/.test(password) || !/[0-9]/.test(password)) {
+                errors.push(getTranslation('password_complexity', 'كلمة المرور يجب أن تحتوي على أحرف وأرقام'));
+            }
+
+            // Check phone length
+            if (!/^[0-9]{7,12}$/.test(phone)) {
+                errors.push(getTranslation('phone_length', 'رقم الهاتف يجب أن يكون بين 7 و 12 رقماً'));
+            }
+
+            // If there are errors, prevent form submission and display them
+            if (errors.length > 0) {
+                e.preventDefault();
+                showErrorMessage(errors.join('\n'));
+            }
+        });
+    }
+});
+
+// التحقق من حالة تسجيل الدخول عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function () {
+    // يمكن إضافة استدعاء للتحقق من حالة تسجيل الدخول من الخادم
+    // في الوقت الحالي، نعرض زر تسجيل الدخول الافتراضي
+    updateAuthUI(false);
 });

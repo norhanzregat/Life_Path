@@ -75,88 +75,41 @@
     <!-- Main Content -->
     <div class="main-content">
         <!-- Top Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-    <div class="container-fluid">
-        <button class="btn btn-outline-primary d-lg-none me-3" id="sidebarToggleTop">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <div class="navbar-nav ms-auto">
-            <!-- اختيار اللغة -->
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
-                    <i class="fas fa-globe me-2"></i>
-                    <span id="currentLang">العربية</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#" onclick="switchLanguage('ar')">العربية</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="switchLanguage('en')">English</a></li>
-                </ul>
-            </div>
-            
-            <!-- ملف المستخدم -->
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
-                    <div class="user-avatar">
-                        <i class="fas fa-user-shield"></i>
-                    </div>
-                    <span class="ms-2" data-ar="المدير العام" data-en="Admin">المدير العام</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">
-                            <i class="fas fa-user me-2"></i>
-                            <span data-ar="الملف الشخصي" data-en="Profile">الملف الشخصي</span>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container-fluid">
+                <button class="btn btn-outline-primary d-lg-none me-3" id="sidebarToggleTop">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="navbar-nav ms-auto">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-globe me-2"></i>
+                            <span id="currentLang">العربية</span>
                         </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i><span data-ar="الإعدادات" data-en="Settings">الإعدادات</span></a>
-                    </li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li>
-                        <a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt me-2"></i><span data-ar="تسجيل الخروج" data-en="Logout">تسجيل الخروج</span></a>
-                    </li>
-                </ul>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="switchLanguage('ar')">العربية</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLanguage('en')">English</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <span class="ms-2" data-ar="المدير العام" data-en="Admin">المدير العام</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i><span data-ar="الملف الشخصي" data-en="Profile">الملف الشخصي</span></a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i><span data-ar="الإعدادات" data-en="Settings">الإعدادات</span></a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt me-2"></i><span data-ar="تسجيل الخروج" data-en="Logout">تسجيل الخروج</span></a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</nav>
-
-<!-- Modal ملف الشخصي: ضع المودال خارج Navbar وDropdown -->
-<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="profileModalLabel">ملفي الشخصي</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
-      </div>
-      <div class="modal-body text-center">
-        <!-- الصورة الشخصية -->
-        <img id="profileImage" src="default-avatar.png" class="img-fluid rounded-circle mb-3" style="max-width:120px;" alt="Avatar">
-        <input type="file" id="imageInput" style="display:none">
-
-        <!-- حقل إدخال مخفي لاختيار الصورة -->
-        <input type="file" id="imageInput" accept="image/*" style="display:none;">
-
-        <!-- بيانات المستخدم  -->
-        <p><strong>الاسم:</strong> سلمى شديفات</p>
-        <p><strong>البريد الإلكتروني:</strong> admin@example.com</p>
-        <p><strong>تاريخ التسجيل:</strong> 2024-01-01</p>
-
-        <!-- زر تعديل كلمة المرور -->
-        <button class="btn btn-primary mt-2" onclick="window.location.href='change-password.php'">
-        تغيير كلمة المرور
-        </button>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-      
+        </nav>
         
         <!-- Dashboard Content -->
         <div class="container-fluid py-4">
