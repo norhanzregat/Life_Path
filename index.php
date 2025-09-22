@@ -30,6 +30,8 @@
     rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/style.css">
@@ -138,6 +140,7 @@
     <i class="bi bi-info-circle"></i>
     <span data-translate="learn_more">اعرف المزيد</span>
   </button>
+
 </div>
 
 
@@ -694,11 +697,17 @@
     </div>
   </div>
 
+
   <!-- Scripts -->
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script src="js/main.js"></script>
+
+      <!-- زر واتساب -->
+<a href="https://wa.me/962775346699" target="_blank" class="whatsapp-float">
+  <i class="fab fa-whatsapp"> </i>
+</a>
 </body>
 
 </html>

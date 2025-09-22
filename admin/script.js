@@ -645,6 +645,67 @@ function formatDate(date, locale = 'ar-SA') {
     return new Intl.DateTimeFormat(locale).format(new Date(date));
 }
 
+// Login Form
+const loginForm = document.getElementById('loginForm');
+const togglePassword = document.getElementById('togglePassword');
+const passwordInput = document.getElementById('password');
+
+loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    // بيانات تسجيل دخول 
+    const adminEmail = "admin@example.com";
+    const adminPassword = "123456";
+
+    if(email === adminEmail && password === adminPassword){
+        window.location.href = "dashboard.php";
+    } else {
+        alert("البريد الإلكتروني أو كلمة المرور خاطئة");
+    }
+});
+
+// زر اظهار/اخفاء كلمة المرور
+togglePassword.addEventListener('click', function() {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+});
+document.addEventListener("DOMContentLoaded", function() {
+    // عناصر الملف الشخصي
+    const profileImage = document.getElementById('profileImage');
+    const imageInput = document.getElementById('imageInput');
+    const changePasswordBtn = document.getElementById('changePasswordBtn');
+
+    // عند النقر على الصورة لاختيار صورة جديدة
+    profileImage.addEventListener('click', () => {
+        imageInput.click();
+    });
+
+    // عند اختيار صورة جديدة
+    imageInput.addEventListener('change', () => {
+        const file = imageInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                profileImage.src = e.target.result; // عرض الصورة الجديدة فورًا
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // زر تغيير كلمة المرور
+    changePasswordBtn.addEventListener('click', () => {
+        alert("هنا يمكنك فتح صفحة تغيير كلمة المرور أو إدخال النموذج");
+        // لاحقًا: window.location.href = "change-password.php";
+    });
+
+});
+
+
+
 // Export functions for global access
 window.switchLanguage = switchLanguage;
 window.addDoctor = addDoctor;

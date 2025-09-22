@@ -1,3 +1,24 @@
+<?php
+// =====================
+// تعليق مؤقت لربط قاعدة البيانات لاحقاً
+// include 'db.php';
+// session_start();
+// if(!isset($_SESSION['admin_id'])){
+//     header("Location: index.php");
+//     exit();
+// }
+// =====================
+
+// بيانات Admin مؤقتة للعرض Front-end فقط
+$user = [
+    'name' => 'المدير العام',
+    'email' => 'admin@lifepath.com',
+    'avatar' => '', // لو عندك صورة حطي الرابط هنا
+    'created_at' => date("Y-m-d")
+];
+?>
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -31,37 +52,37 @@
         <nav class="sidebar-nav">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.html">
+                    <a class="nav-link" href="dashboard.php">
                         <i class="fas fa-tachometer-alt"></i>
                         <span data-ar="لوحة التحكم" data-en="Dashboard">لوحة التحكم</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="doctors.html">
+                    <a class="nav-link" href="doctors.php">
                         <i class="fas fa-user-md"></i>
                         <span data-ar="الأطباء" data-en="Doctors">الأطباء</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="patients.html">
+                    <a class="nav-link" href="patients.php">
                         <i class="fas fa-users"></i>
                         <span data-ar="المرضى" data-en="Patients">المرضى</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="appointments.html">
+                    <a class="nav-link active" href="appointments.php">
                         <i class="fas fa-calendar-alt"></i>
                         <span data-ar="المواعيد" data-en="Appointments">المواعيد</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="payments.html">
+                    <a class="nav-link" href="payments.php">
                         <i class="fas fa-credit-card"></i>
                         <span data-ar="المدفوعات" data-en="Payments">المدفوعات</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="settings.html">
+                    <a class="nav-link" href="settings.php">
                         <i class="fas fa-cog"></i>
                         <span data-ar="الإعدادات" data-en="Settings">الإعدادات</span>
                     </a>
@@ -99,15 +120,42 @@
                             <span class="ms-2" data-ar="المدير العام" data-en="Admin">المدير العام</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i><span data-ar="الملف الشخصي" data-en="Profile">الملف الشخصي</span></a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profileModal"><i class="fas fa-user me-2"></i><span data-ar="الملف الشخصي" data-en="Profile">الملف الشخصي</span></a></li>
                             <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i><span data-ar="الإعدادات" data-en="Settings">الإعدادات</span></a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt me-2"></i><span data-ar="تسجيل الخروج" data-en="Logout">تسجيل الخروج</span></a></li>
                         </ul>
                     </div>
+                    <!-- Modal ملف الشخصي -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="profileModalLabel">ملفي الشخصي</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+      </div>
+      <div class="modal-body text-center">
+        <!-- الصورة الشخصية -->
+        <img src="default-avatar.png" class="img-fluid rounded-circle mb-3" style="max-width:120px;" alt="Avatar">
+
+        <!-- بيانات المستخدم مؤقتة -->
+        <p><strong>الاسم:</strong> أحمد محمد</p>
+        <p><strong>البريد الإلكتروني:</strong> admin@example.com</p>
+        <p><strong>تاريخ التسجيل:</strong> 2024-01-01</p>
+
+        <!-- زر تعديل كلمة المرور -->
+        <button class="btn btn-primary mt-2">تغيير كلمة المرور</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+      </div>
+    </div>
                 </div>
             </div>
         </nav>
+
+    
+
         
         <!-- Appointments Management Content -->
         <div class="container-fluid py-4">

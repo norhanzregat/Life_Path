@@ -31,37 +31,37 @@
         <nav class="sidebar-nav">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.html">
+                    <a class="nav-link" href="dashboard.php">
                         <i class="fas fa-tachometer-alt"></i>
                         <span data-ar="لوحة التحكم" data-en="Dashboard">لوحة التحكم</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="doctors.html">
+                    <a class="nav-link" href="doctors.php">
                         <i class="fas fa-user-md"></i>
                         <span data-ar="الأطباء" data-en="Doctors">الأطباء</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="patients.html">
+                    <a class="nav-link" href="patients.php">
                         <i class="fas fa-users"></i>
                         <span data-ar="المرضى" data-en="Patients">المرضى</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="appointments.html">
+                    <a class="nav-link" href="appointments.php">
                         <i class="fas fa-calendar-alt"></i>
                         <span data-ar="المواعيد" data-en="Appointments">المواعيد</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="payments.html">
+                    <a class="nav-link" href="payments.php">
                         <i class="fas fa-credit-card"></i>
                         <span data-ar="المدفوعات" data-en="Payments">المدفوعات</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="settings.html">
+                    <a class="nav-link active" href="settings.php">
                         <i class="fas fa-cog"></i>
                         <span data-ar="الإعدادات" data-en="Settings">الإعدادات</span>
                     </a>

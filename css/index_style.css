@@ -649,3 +649,33 @@
     .breadcrumb-item.active {
       color: var(--text-light);
     }
+
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366; /* لون واتساب الأخضر */
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  position: fixed !important;
+  z-index: 2147483647 !important; /* أعلى قيمة ممكنة */
+    pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  text-decoration: none;
+  color: white;
+}
+
+
+

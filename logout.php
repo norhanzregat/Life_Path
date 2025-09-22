@@ -12,5 +12,4 @@
 
 	// redirecting the user to the login page
 	header('Location: login.php?action=logout');
-
  ?>
